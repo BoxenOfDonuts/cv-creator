@@ -3,8 +3,9 @@ import React from 'react';
 class Education extends React.Component {
     render() {
         const { education } = this.props;
+        const { onDelete } = this.props;
         const educationList = education.map((institution) => {
-            return <EducationSection education={institution} />
+            return <EducationSection education={institution} onDelete={onDelete} />
         })
 
         return (
@@ -18,10 +19,11 @@ class Education extends React.Component {
 class EducationSection extends React.Component {
     render() {
         const { institution, degree, graduationDate } = this.props.education;
+        const { onDelete } = this.props;
         return (
             <div className="education">
                 <h3>Education</h3>
-                <button type="button">Delete</button>
+                <button type="button" onClick={onDelete}>Delete</button>
                 <div>
                     <label htmlFor="institution"></label>
                     <input type="text" name="institution" value={institution} required/>
