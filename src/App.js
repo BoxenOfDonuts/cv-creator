@@ -7,7 +7,6 @@ import Education from './components/Education';
 import Experience from './components/Experience';
 
 class App extends React.Component {
-  // have to add a number to use as keys for education / experience I guess
   constructor(props) {
     super(props)
 
@@ -50,11 +49,62 @@ class App extends React.Component {
   }
 
   addAnotherSection = (e) => {
-    console.log(e)
+    const {id} = e.target.dataset
+    console.log(id)
+    if (id === '') return
+
+    switch(id) {
+        case('education'):
+          this.setState((state) => {
+            const newEducation = {
+              instiution: '',
+              degree: '',
+              graduationDate: '',
+            };
+            const education = [...state.education, newEducation]
+            return {
+              education,
+            };
+          });
+          break;
+      case('experience'):
+        this.setState((state) => {
+          const newExperience = {
+            company: '',
+            title: '',
+            tenureStart: '',
+            tenureEnd: '',
+          }
+          const experience = [...state.experience, newExperience]
+          return {
+            experience
+          };
+        });
+        break;
+      default:
+        //pass
+    }
   }
 
   handleChange = (e) => {
-    console.log(e)
+    console.log(e);
+  }
+
+  deleteEducation = (index) => {
+    const education = this.state.education.filter((institution, currentIndex) => {
+      return currentIndex !== index;
+    })
+
+    this.setState({education,})
+
+  }
+
+  deleteExperience = (index) => {
+    const experience = this.state.experience.filter((company, currentIndex) => {
+      return currentIndex !== index;
+    })
+
+    this.setState({experience,})
   }
 
   render() {
@@ -63,13 +113,24 @@ class App extends React.Component {
         <Header />
         <PersonalInfo  personalData={this.state.personal}/>
         <Skills skills={this.state.skills} />
-        {this.state.education.map((institution) => 
-          <Education key={institution.institution + institution.graduationDate} education={institution} />
+        {this.state.education.map((institution, index) => 
+          <Education
+            key={institution.institution + institution.graduationDate}
+            education={institution}
+            index={index}
+            onClick={this.deleteEducation}
+          />
         )}
-        {this.state.experience.map((company) =>
-          <Experience key={company.name + company.title} experience={company} />
+        <button className="add-button button" data-id="education" onClick={this.addAnotherSection}>Add</button>
+        {this.state.experience.map((company, index) =>
+          <Experience
+            key={company.name + company.title}
+            experience={company}
+            index={index}
+            onClick={this.deleteExperience}
+          />
         )}
-
+        <button className="add-button button" data-id="experience" onClick={this.addAnotherSection}>Add</button>
         {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
         {/* <Experience experience={this.state.experience} /> */}
       </div>
@@ -80,3 +141,7 @@ class App extends React.Component {
 }
 
 export default App;
+
+// notes for later:
+// headers (experience /education ) need to not be in the component if i'm rendering them like this
+// otherwise go back to the component making the forms itself like I had originally

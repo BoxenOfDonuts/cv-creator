@@ -1,13 +1,17 @@
 import React from 'react';
 
 class Education extends React.Component {
+    handleClick(index) {
+        this.props.onClick(index)
+    } 
+
     render() {
         const { institution, degree, graduationDate } = this.props.education;
-        const { onDelete } = this.props;
+        const { index } = this.props
         return (
             <div className="education">
                 <h3>Education</h3>
-                <button type="button" onClick={onDelete}>Delete</button>
+                <button type="button" onClick={() =>this.handleClick(index)}>Delete</button>
                 <div>
                     <label htmlFor="institution">institution</label>
                     <input type="text" name="institution" value={institution} required/>

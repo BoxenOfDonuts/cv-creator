@@ -1,12 +1,17 @@
 import React from 'react';
 
 class Experience extends React.Component {
+    handleClick(index) {
+        this.props.onClick(index)
+    } 
+
     render() {
         const { company, title, tenureStart, tenureEnd } = this.props.experience;
+        const { index } = this.props;
         return (
             <div className="experience">
                 <h3>Experience</h3>
-                <button type="button">Delete</button>
+                <button type="button" onClick={() =>this.handleClick(index)}>Delete</button>
                 <div>
                     <label htmlFor="company"></label>
                     <input type="text" name="company" value={company} required/>
