@@ -63,8 +63,15 @@ class App extends React.Component {
         <Header />
         <PersonalInfo  personalData={this.state.personal}/>
         <Skills skills={this.state.skills} />
-        <Education education={this.state.education} onDelete={this.addAnotherSection} />
-        <Experience experience={this.state.experience} />
+        {this.state.education.map((institution) => 
+          <Education key={institution.institution + institution.graduationDate} education={institution} />
+        )}
+        {this.state.experience.map((company) =>
+          <Experience key={company.name + company.title} experience={company} />
+        )}
+
+        {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
+        {/* <Experience experience={this.state.experience} /> */}
       </div>
     );
   }

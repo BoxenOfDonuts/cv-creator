@@ -2,22 +2,6 @@ import React from 'react';
 
 class Education extends React.Component {
     render() {
-        const { education } = this.props;
-        const { onDelete } = this.props;
-        const educationList = education.map((institution) => {
-            return <EducationSection education={institution} onDelete={onDelete} />
-        })
-
-        return (
-            <div>
-                {educationList}
-            </div>
-        );
-    }
-}
-
-class EducationSection extends React.Component {
-    render() {
         const { institution, degree, graduationDate } = this.props.education;
         const { onDelete } = this.props;
         return (
@@ -25,7 +9,7 @@ class EducationSection extends React.Component {
                 <h3>Education</h3>
                 <button type="button" onClick={onDelete}>Delete</button>
                 <div>
-                    <label htmlFor="institution"></label>
+                    <label htmlFor="institution">institution</label>
                     <input type="text" name="institution" value={institution} required/>
                 </div>
                 <div>

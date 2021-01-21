@@ -2,21 +2,6 @@ import React from 'react';
 
 class Experience extends React.Component {
     render() {
-        const { experience } = this.props;
-        const experienceList = experience.map((company) => {
-            return <ExperienceSection experience={company} />
-        })
-
-        return (
-            <div>
-                {experienceList}
-            </div>
-        );
-    }
-}
-
-class ExperienceSection extends React.Component {
-    render() {
         const { company, title, tenureStart, tenureEnd } = this.props.experience;
         return (
             <div className="experience">
