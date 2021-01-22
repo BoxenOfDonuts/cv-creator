@@ -12,10 +12,10 @@ class App extends React.Component {
 
     this.state = {
       personal: {
-        name: 'BoxenOf',
-        lastName: 'Donuts',
-        email: 'BoxenOfDonuts@gmail.com',
-        phone: '1234567',
+        name: '',
+        lastName: '',
+        email: '',
+        phone: '',
       },
       skills: [
         'java',
@@ -53,6 +53,7 @@ class App extends React.Component {
     console.log(id)
     if (id === '') return
 
+    // this may need to be computed values 
     switch(id) {
         case('education'):
           this.setState((state) => {
@@ -95,7 +96,7 @@ class App extends React.Component {
       return currentIndex !== index;
     })
 
-    this.setState({education,})
+    this.setState({education,});
 
   }
 
@@ -107,29 +108,32 @@ class App extends React.Component {
     this.setState({experience,})
   }
 
+  handleChange = (personal, name, value) => {
+    console.log(personal, name, value)
+    this.setState({
+      [personal]: {...this.state[personal], [name]: value}
+    });
+  }
+
   render() {
     return (
       <div>
         <Header />
-        <PersonalInfo  personalData={this.state.personal}/>
+        <PersonalInfo
+          personalData={this.state.personal}
+          onInputChange={this.handleChange}
+          parentKey={'personal'}
+        />
         <Skills skills={this.state.skills} />
-        {this.state.education.map((institution, index) => 
-          <Education
-            key={institution.institution + institution.graduationDate}
-            education={institution}
-            index={index}
-            onClick={this.deleteEducation}
-          />
-        )}
+        <Education
+          education={this.state.education}
+          onClick={this.deleteEducation}
+        />
         <button className="add-button button" data-id="education" onClick={this.addAnotherSection}>Add</button>
-        {this.state.experience.map((company, index) =>
-          <Experience
-            key={company.name + company.title}
-            experience={company}
-            index={index}
-            onClick={this.deleteExperience}
-          />
-        )}
+        <Experience
+          experience={this.state.experience}
+          onClick={this.deleteExperience}
+        />
         <button className="add-button button" data-id="experience" onClick={this.addAnotherSection}>Add</button>
         {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
         {/* <Experience experience={this.state.experience} /> */}
@@ -141,7 +145,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// notes for later:
-// headers (experience /education ) need to not be in the component if i'm rendering them like this
-// otherwise go back to the component making the forms itself like I had originally
