@@ -109,19 +109,39 @@ class App extends React.Component {
   }
 
   handleChange = (key, name, value) => {
-    console.log(key, name, value)
+    // console.log({[key]: {...this.state[key], [name]: value}})
     this.setState({
       [key]: {...this.state[key], [name]: value}
     });
   }
 
-  handleEducationChange = (key, index, name, value) => {
-    index=0;
-    const updatedPair = {[name]: value};
-    console.log({[key]: [{...this.state[key][index], ...updatedPair}]})
-    this.setState = ({
-      [key]: [...this.state[key], {...this.state[key][index], ...updatedPair}]
-    });
+  handleEducationChange = (key, index, value) => {
+    // index=0;
+    // const updatedPair = {[name]: value};
+    // // console.log({[key]: [{...this.state[key][index], ...updatedPair}]})
+    // this.setState = ({
+    //   // [key]: [...this.state[key], {...this.state[key][index], ...updatedPair}]
+    //   [key]: [{institution: 'Poop'}]
+    // });
+    console.log(this.state[key], value)
+    const educationArray = this.state[key].map((key, currentIndex) => {
+      console.log(currentIndex, index)
+      if (currentIndex === index) {
+        return value;
+      }
+      return key;
+    })
+
+    console.log(educationArray)
+    // this.setState((state) => {
+    //   const form = state[key].splice(index, 1, value)
+    //   console.log(form)
+    // })
+
+    this.setState({
+      [key]: educationArray
+    })
+
   }
 
   render() {

@@ -9,64 +9,63 @@ const EducationForm = (props) => {
         props.onClick(index);
     }
 
-    const handleChange = (index, e) => {
-        const { value, name } = e.target;
-        props.handleChange('education', index, name, value)
+    // const handleChange = (index, e) => {
+    //     const { value, name } = e.target;
+    //     props.handleChange('education', index, name, value)
 
+    // }
+
+    const handleFormChange = (e) => {
+        const {name, value} = e.target;
+        const form = {
+            ...props.education,
+            [name]: value
+        };
+        // props.handleChange('education', index, form)
     }
 
     return (
         <div>
-            <button type="button" onClick={() => handleClick(index)}>Delete</button> 
+            <button type="button" onClick={() => handleClick(index)}>Delete</button>
+            <form onChange={handleFormChange}>
             <div>
                 <label htmlFor="institution">institution</label>
                 <input
                     type="text"
                     name="institution"
                     value={institution}
-                    onChange={(e) => handleChange(index, e)}
+                    // onChange={(e) => handleChange(index, e)}
                     required/>
             </div>
             <div>
-                <label htmlFor="degree"></label>
+                <label htmlFor="degree">Degree</label>
                 <input
                     type="text"
                     name="degree"
-                    value={degree}
+                    // value={degree}
                     required/>
             </div>
             <div>
                 <label htmlFor="grad-date"></label>
                 <input type="date" name="graduationDate" value={graduationDate} required />
             </div>
+            </form> 
         </div>
     );
 }
 
 
 class Education extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            education: [],
-        }
-
-    
-    }
-
     handleClick = (index) => {
         this.props.onClick(index)
     }
 
-    handleChange = (key, index, name, value) => {
-        this.props.onInputChange(key, index, name, value)
+    handleChange = (key, index, value) => {
+        this.props.onInputChange(key, index, value)
     }
 
     render() {
         const { education } = this.props;
-
-        // const education = this.state.education;
 
         return (
             <div className="education">
