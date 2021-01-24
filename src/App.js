@@ -18,7 +18,7 @@ class App extends React.Component {
         email: "",
         phone: "",
       },
-      skills: ["java", "python", "Typescript", "SQL"],
+      skills: [],
       education: [
         {
           institution: "",
@@ -122,6 +122,12 @@ class App extends React.Component {
     });
   };
 
+  handleSkillChange = (value) => {
+    this.setState({
+      skills: value
+    })
+  }
+
   render() {
     console.log(this.state);
     return (
@@ -132,7 +138,10 @@ class App extends React.Component {
           onInputChange={this.handleChange}
           parentKey={"personal"}
         />
-        <Skills skills={this.state.skills} />
+        <Skills
+          skills={this.state.skills}
+          onSkillUpdate={this.handleSkillChange}
+        />
         <Education
           education={this.state.education}
           onClick={this.deleteEducation}
@@ -158,9 +167,10 @@ class App extends React.Component {
           onClick={this.addAnotherSection}
         >
           Add
-        </button>
+        </button><br/>
         {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
         {/* <Experience experience={this.state.experience} /> */}
+        <button onClick={this.validateForm}>Submit</button>
       </div>
     );
   }

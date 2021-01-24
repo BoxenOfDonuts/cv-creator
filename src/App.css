@@ -2,6 +2,18 @@
   text-align: center;
 }
 
+.delete.button {
+  display: none;
+  margin-left: 15px;
+  cursor: pointer;
+  background-color: #282c34;
+  color:white;
+}
+
+.skill-list > ul > li:hover  .delete.button {
+  display: inline-block;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
