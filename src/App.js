@@ -108,10 +108,19 @@ class App extends React.Component {
     this.setState({experience,})
   }
 
-  handleChange = (personal, name, value) => {
-    console.log(personal, name, value)
+  handleChange = (key, name, value) => {
+    console.log(key, name, value)
     this.setState({
-      [personal]: {...this.state[personal], [name]: value}
+      [key]: {...this.state[key], [name]: value}
+    });
+  }
+
+  handleEducationChange = (key, index, name, value) => {
+    index=0;
+    const updatedPair = {[name]: value};
+    console.log({[key]: [{...this.state[key][index], ...updatedPair}]})
+    this.setState = ({
+      [key]: [...this.state[key], {...this.state[key][index], ...updatedPair}]
     });
   }
 
@@ -128,6 +137,7 @@ class App extends React.Component {
         <Education
           education={this.state.education}
           onClick={this.deleteEducation}
+          onInputChange= {this.handleEducationChange}
         />
         <button className="add-button button" data-id="education" onClick={this.addAnotherSection}>Add</button>
         <Experience
