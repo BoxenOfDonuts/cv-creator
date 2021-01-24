@@ -1,177 +1,169 @@
-import React from 'react';
-import './App.css';
-import Header from './components/Header'
-import PersonalInfo from './components/PersonalInfo'
-import Skills from './components/Skills';
-import Education from './components/Education';
-import Experience from './components/Experience';
+import React from "react";
+import "./App.css";
+import { v4 as uuid } from "uuid";
+import Header from "./components/Header";
+import PersonalInfo from "./components/PersonalInfo";
+import Skills from "./components/Skills";
+import Education from "./components/Education";
+import Experience from "./components/Experience";
 
 class App extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       personal: {
-        name: '',
-        lastName: '',
-        email: '',
-        phone: '',
+        name: "",
+        lastName: "",
+        email: "",
+        phone: "",
       },
-      skills: [
-        'java',
-        'python',
-        'Typescript',
-        'SQL'
-      ],
+      skills: ["java", "python", "Typescript", "SQL"],
       education: [
         {
-          institution: 'SLU',
-          degree: 'Something',
-          graduationDate: '1920-12-31'
+          institution: "",
+          degree: "",
+          graduationDate: "",
+          id: uuid(),
         },
       ],
       experience: [
         {
-          company: 'Car Dealer 56',
-          title: 'Mr Seller Guy',
-          tenureStart: '1920-01-15',
-          tenureEnd: '1925-06-31',
-    
+          company: "",
+          title: "",
+          tenureStart: "",
+          tenureEnd: "",
+          id: uuid(),
         },
-        {
-          company: 'Car Dealer 56',
-          title: 'Manger of Seller Guys',
-          tenureStart: '1925-07-01',
-          tenureEnd: '',
-        },
-      ]
-    }
+      ],
+    };
   }
 
   addAnotherSection = (e) => {
-    const {id} = e.target.dataset
-    console.log(id)
-    if (id === '') return
+    const { id } = e.target.dataset;
+    if (id === "") return;
 
-    // this may need to be computed values 
-    switch(id) {
-        case('education'):
-          this.setState((state) => {
-            const newEducation = {
-              instiution: '',
-              degree: '',
-              graduationDate: '',
-            };
-            const education = [...state.education, newEducation]
-            return {
-              education,
-            };
-          });
-          break;
-      case('experience'):
+    // this may need to be computed values
+    switch (id) {
+      case "education":
+        this.setState((state) => {
+          const newEducation = {
+            instiution: "",
+            degree: "",
+            graduationDate: "",
+            id: uuid(),
+          };
+          const education = [...state.education, newEducation];
+          return {
+            education,
+          };
+        });
+        break;
+      case "experience":
         this.setState((state) => {
           const newExperience = {
-            company: '',
-            title: '',
-            tenureStart: '',
-            tenureEnd: '',
-          }
-          const experience = [...state.experience, newExperience]
+            company: "",
+            title: "",
+            tenureStart: "",
+            tenureEnd: "",
+            id: uuid(),
+          };
+          const experience = [...state.experience, newExperience];
           return {
-            experience
+            experience,
           };
         });
         break;
       default:
-        //pass
+      //pass
     }
-  }
+  };
 
   handleChange = (e) => {
     console.log(e);
-  }
+  };
 
   deleteEducation = (index) => {
-    const education = this.state.education.filter((institution, currentIndex) => {
-      return currentIndex !== index;
-    })
+    const education = this.state.education.filter(
+      (institution, currentIndex) => {
+        return currentIndex !== index;
+      }
+    );
 
-    this.setState({education,});
-
-  }
+    this.setState({ education });
+  };
 
   deleteExperience = (index) => {
     const experience = this.state.experience.filter((company, currentIndex) => {
       return currentIndex !== index;
-    })
+    });
 
-    this.setState({experience,})
-  }
+    this.setState({ experience });
+  };
 
   handleChange = (key, name, value) => {
-    // console.log({[key]: {...this.state[key], [name]: value}})
     this.setState({
-      [key]: {...this.state[key], [name]: value}
+      [key]: { ...this.state[key], [name]: value },
     });
-  }
+  };
 
   handleEducationChange = (key, index, value) => {
-    // index=0;
-    // const updatedPair = {[name]: value};
-    // // console.log({[key]: [{...this.state[key][index], ...updatedPair}]})
-    // this.setState = ({
-    //   // [key]: [...this.state[key], {...this.state[key][index], ...updatedPair}]
-    //   [key]: [{institution: 'Poop'}]
-    // });
-    console.log(this.state[key], value)
-    const educationArray = this.state[key].map((key, currentIndex) => {
-      console.log(currentIndex, index)
-      if (currentIndex === index) {
-        return value;
-      }
-      return key;
-    })
+    this.setState((state) => {
+      const array = state[key].map((key, currentIndex) => {
+        if (currentIndex === index) {
+          return value;
+        }
+        return key;
+      });
 
-    console.log(educationArray)
-    // this.setState((state) => {
-    //   const form = state[key].splice(index, 1, value)
-    //   console.log(form)
-    // })
-
-    this.setState({
-      [key]: educationArray
-    })
-
-  }
+      return {
+        [key]: array,
+      };
+    });
+  };
 
   render() {
+    console.log(this.state);
     return (
       <div>
         <Header />
         <PersonalInfo
           personalData={this.state.personal}
           onInputChange={this.handleChange}
-          parentKey={'personal'}
+          parentKey={"personal"}
         />
         <Skills skills={this.state.skills} />
         <Education
           education={this.state.education}
           onClick={this.deleteEducation}
-          onInputChange= {this.handleEducationChange}
+          onInputChange={this.handleEducationChange}
+          parentKey={"education"}
         />
-        <button className="add-button button" data-id="education" onClick={this.addAnotherSection}>Add</button>
+        <button
+          className="add-button button"
+          data-id="education"
+          onClick={this.addAnotherSection}
+        >
+          Add
+        </button>
         <Experience
           experience={this.state.experience}
           onClick={this.deleteExperience}
+          onInputChange={this.handleEducationChange}
+          parentKey={"experience"}
         />
-        <button className="add-button button" data-id="experience" onClick={this.addAnotherSection}>Add</button>
+        <button
+          className="add-button button"
+          data-id="experience"
+          onClick={this.addAnotherSection}
+        >
+          Add
+        </button>
         {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
         {/* <Experience experience={this.state.experience} /> */}
       </div>
     );
   }
-
-
 }
 
 export default App;

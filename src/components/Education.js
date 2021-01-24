@@ -1,87 +1,92 @@
-import React from 'react';
-
+import React from "react";
 
 const EducationForm = (props) => {
-    const { institution, degree, graduationDate } = props.education;
-    const { index } = props;
+  const { institution, degree, graduationDate } = props.education;
+  const { index, parentKey } = props;
 
-    const handleClick = (index) => {
-        props.onClick(index);
-    }
+  const handleClick = (index) => {
+    props.onClick(index);
+  };
 
-    // const handleChange = (index, e) => {
-    //     const { value, name } = e.target;
-    //     props.handleChange('education', index, name, value)
+  const handleChange = (e, key) => {
+    console.log(key);
+    const { name, value } = e.target;
+    const form = {
+      ...props.education,
+      [name]: value,
+    };
+    props.handleChange(key, index, form);
+  };
 
-    // }
-
-    const handleFormChange = (e) => {
-        const {name, value} = e.target;
-        const form = {
-            ...props.education,
-            [name]: value
-        };
-        // props.handleChange('education', index, form)
-    }
-
-    return (
+  return (
+    <div>
+      <button type="button" onClick={() => handleClick(index)}>
+        Delete
+      </button>
+      <form>
         <div>
-            <button type="button" onClick={() => handleClick(index)}>Delete</button>
-            <form onChange={handleFormChange}>
-            <div>
-                <label htmlFor="institution">institution</label>
-                <input
-                    type="text"
-                    name="institution"
-                    value={institution}
-                    // onChange={(e) => handleChange(index, e)}
-                    required/>
-            </div>
-            <div>
-                <label htmlFor="degree">Degree</label>
-                <input
-                    type="text"
-                    name="degree"
-                    // value={degree}
-                    required/>
-            </div>
-            <div>
-                <label htmlFor="grad-date"></label>
-                <input type="date" name="graduationDate" value={graduationDate} required />
-            </div>
-            </form> 
+          <label htmlFor="institution">Institution</label>
+          <input
+            type="text"
+            name="institution"
+            value={institution}
+            onChange={(e) => handleChange(e, parentKey)}
+            required
+          />
         </div>
-    );
-}
-
+        <div>
+          <label htmlFor="degree">Degree</label>
+          <input
+            type="text"
+            name="degree"
+            value={degree}
+            onChange={(e) => handleChange(e, parentKey)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="graduationDate">Graduation Date</label>
+          <input
+            type="date"
+            name="graduationDate"
+            value={graduationDate}
+            onChange={(e) => handleChange(e, parentKey)}
+            required
+          />
+        </div>
+      </form>
+    </div>
+  );
+};
 
 class Education extends React.Component {
-    handleClick = (index) => {
-        this.props.onClick(index)
-    }
+  handleClick = (index) => {
+    this.props.onClick(index);
+  };
 
-    handleChange = (key, index, value) => {
-        this.props.onInputChange(key, index, value)
-    }
+  handleChange = (key, index, value) => {
+    this.props.onInputChange(key, index, value);
+  };
 
-    render() {
-        const { education } = this.props;
+  render() {
+    const { education, parentKey } = this.props;
 
-        return (
-            <div className="education">
-                <h3>Education</h3>
-                {education.map((institution, index) => 
-                    <EducationForm
-                        education={institution}
-                        index={index}
-                        key={institution.degree+institution.graduationDate}
-                        onClick={this.handleClick}
-                        handleChange={this.handleChange}
-                    />
-                )}
-            </div>
-        );
-    }
+    return (
+      <div className="education">
+        <h3>Education</h3>
+        {education.map((institution, index) => (
+          <EducationForm
+            education={institution}
+            index={index}
+            key={institution.id}
+            onClick={this.handleClick}
+            handleChange={this.handleChange}
+            parentKey={parentKey}
+          />
+        ))}
+      </div>
+    );
+  }
 }
 
 export default Education;

@@ -1,62 +1,109 @@
-import React from 'react';
+import React from "react";
 
+const ExperienceForm = (props) => {
+  const { company, title, tenureStart, tenureEnd } = props.experience;
+  const { index, parentKey } = props;
 
-const EducationForm = (props) => {
-    const { company, title, tenureStart, tenureEnd } = props.experience;
-    const { index } = props;
+  const handleClick = (index) => {
+    props.onClick(index);
+  };
 
-    const handleClick = (index) => {
-        props.onClick(index)
-    }
+  const handleChange = (e, key) => {
+    console.log(key);
+    const { name, value } = e.target;
+    const form = {
+      ...props.experience,
+      [name]: value,
+    };
+    console.log(form);
+    props.handleChange(key, index, form);
+  };
 
-    return (
-        <div>
-            <button type="button" onClick={() =>handleClick(index)}>Delete</button>
-            <div>
-                <label htmlFor="company"></label>
-                <input type="text" name="company" value={company} required/>
-            </div>
-            <div>
-                <label htmlFor="job-title"></label>
-                <input type="text" name="job-title" value={title} required/>
-            </div>
-            <div>
-                <label htmlFor="start-date"></label>
-                <input type="date" name="start-date" value={tenureStart} required />
-            </div>
-            <div>
-                <label htmlFor="end-date"></label>
-                <input type="date" name="end-date" value={tenureEnd} required />
-            </div>
-            <div>
-                <label htmlFor="experience">Experience</label>
-                <textarea name="experience" cols="30" rows="10"></textarea>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <button type="button" onClick={() => handleClick(index)}>
+        Delete
+      </button>
+      <div>
+        <label htmlFor="company">Company Name</label>
+        <input
+          type="text"
+          name="company"
+          value={company}
+          onChange={(e) => handleChange(e, parentKey)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="title">Job Title</label>
+        <input
+          type="text"
+          name="title"
+          value={title}
+          onChange={(e) => handleChange(e, parentKey)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="tenureStart">Start Day</label>
+        <input
+          type="date"
+          name="tenureStart"
+          value={tenureStart}
+          onChange={(e) => handleChange(e, parentKey)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="tenureEnd">End Date</label>
+        <input
+          type="date"
+          name="tenureEnd"
+          value={tenureEnd}
+          onChange={(e) => handleChange(e, parentKey)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="experience">Experience</label>
+        <textarea
+          name="experience"
+          cols="30"
+          rows="10"
+          onChange={(e) => handleChange(e, parentKey)}
+        ></textarea>
+      </div>
+    </div>
+  );
+};
 
 class Experience extends React.Component {
-    HandleClick = (index) => {
-        this.props.onClick(index)
-    } 
+  HandleClick = (index) => {
+    this.props.onClick(index);
+  };
 
-    render() {
-        const { experience } = this.props;
-        return (
-            <div className="experience">
-                <h3>Experience</h3>
-                {experience.map((company, index) =>
-                    <EducationForm
-                        key={company.name + company.title}
-                        experience={experience}
-                        index={index}
-                        onClick={this.HandleClick}
-                    />
-                )}
-            </div>
-        );
-    }
+  handleChange = (key, index, value) => {
+    this.props.onInputChange(key, index, value);
+  };
+
+  render() {
+    const { experience, parentKey } = this.props;
+    return (
+      <div className="experience">
+        <h3>Experience</h3>
+        {experience.map((company, index) => (
+          <ExperienceForm
+            key={company.id}
+            experience={company}
+            index={index}
+            onClick={this.HandleClick}
+            handleChange={this.handleChange}
+            parentKey={parentKey}
+          />
+        ))}
+      </div>
+    );
+  }
 }
 
 export default Experience;
