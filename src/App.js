@@ -7,6 +7,7 @@ import Skills from "./components/Skills";
 import Education from "./components/Education";
 import Experience from "./components/Experience";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -36,6 +37,7 @@ class App extends React.Component {
           id: uuid(),
         },
       ],
+      errors : {}
     };
   }
 
@@ -128,8 +130,83 @@ class App extends React.Component {
     })
   }
 
+  formValidation = (() => {
+    const validateAll = (form) => {
+        const fields = Array.from(form.querySelectorAll('.input'))
+        let valid = true;
+        fields.forEach(field => {
+            if (!field.validity.valid) {
+                const errorSpan = field.nextElementSibling;
+                this.errorDisplay.showError(field, errorSpan);
+                valid = false;
+            }
+        })
+  
+        
+        return valid;
+    }
+  
+    const _validateSingleInput = (element) => {
+        const errorSpan = element.nextElementSibling;
+        if (element.validity.valid) {
+            this.errorDisplay.clearError(element, errorSpan)
+        } else {
+            this.errorDisplay.showError(element, errorSpan)
+        }
+    }
+  
+    const email = (element) => {
+        _validateSingleInput(element);
+    }
+  
+    const country = (element) => {
+        _validateSingleInput(element);
+    }
+  
+    const zipcode = (element) => {
+        _validateSingleInput(element);
+    }
+  
+    const text = (elememnt) => {
+      _validateSingleInput(elememnt)
+    }
+  
+    const tel = (element) => {
+      _validateSingleInput(element)
+    }
+  
+    const textarea = (element) => {
+      _validateSingleInput(element)
+    }
+  
+    return { email, country, zipcode, text, tel, textarea, validateAll }
+  
+  })();
+  
+  errorDisplay = (() => {
+    const showError = (element, errorSpan) => {
+      console.log("Error Error => MAKE THIS")
+    }
+  
+    const clearError = (element, errorSpan) => {
+      console.log("Clean Error => MAKE THIS")
+    }
+  
+    return {
+      clearError,
+      showError
+    }
+  })();
+  
+  handleFormValidation(e) {
+    let el = e.target
+    console.log(el)
+    if (el) {
+        this.formValidation[el.type](el);
+    }
+  }
+
   render() {
-    console.log(this.state);
     return (
       <div>
         <Header />
@@ -137,6 +214,7 @@ class App extends React.Component {
           personalData={this.state.personal}
           onInputChange={this.handleChange}
           parentKey={"personal"}
+          validateOnBlur={this.handleFormValidation}
         />
         <Skills
           skills={this.state.skills}
@@ -147,6 +225,7 @@ class App extends React.Component {
           onClick={this.deleteEducation}
           onInputChange={this.handleEducationChange}
           parentKey={"education"}
+          validateOnBlur={this.handleFormValidation}
         />
         <button
           className="add-button button"
@@ -160,6 +239,7 @@ class App extends React.Component {
           onClick={this.deleteExperience}
           onInputChange={this.handleEducationChange}
           parentKey={"experience"}
+          validateOnBlur={this.handleFormValidation}
         />
         <button
           className="add-button button"

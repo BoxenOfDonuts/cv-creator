@@ -19,6 +19,10 @@ const ExperienceForm = (props) => {
     props.handleChange(key, index, form);
   };
 
+  const handleValidation = (e) => {
+    props.onBlur(e);
+}
+
   return (
     <div>
       <button type="button" onClick={() => handleClick(index)}>
@@ -31,6 +35,7 @@ const ExperienceForm = (props) => {
           name="company"
           value={company}
           onChange={(e) => handleChange(e, parentKey)}
+          onBlur={handleValidation}
           required
         />
       </div>
@@ -41,6 +46,7 @@ const ExperienceForm = (props) => {
           name="title"
           value={title}
           onChange={(e) => handleChange(e, parentKey)}
+          onBlur={handleValidation}
           required
         />
       </div>
@@ -71,6 +77,7 @@ const ExperienceForm = (props) => {
           cols="30"
           rows="10"
           onChange={(e) => handleChange(e, parentKey)}
+          onBlur={handleValidation}
         ></textarea>
       </div>
     </div>
@@ -86,6 +93,10 @@ class Experience extends React.Component {
     this.props.onInputChange(key, index, value);
   };
 
+  handleValidation = (e) => {
+    this.props.validateOnBlur(e);
+  };
+
   render() {
     const { experience, parentKey } = this.props;
     return (
@@ -97,6 +108,7 @@ class Experience extends React.Component {
             experience={company}
             index={index}
             onClick={this.HandleClick}
+            onBlur={this.handleValidation}
             handleChange={this.handleChange}
             parentKey={parentKey}
           />

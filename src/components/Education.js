@@ -18,6 +18,10 @@ const EducationForm = (props) => {
     props.handleChange(key, index, form);
   };
 
+  const handleValidation = (e) => {
+      props.onBlur(e);
+  }
+
   return (
     <div>
       <button type="button" onClick={() => handleClick(index)}>
@@ -31,6 +35,7 @@ const EducationForm = (props) => {
             name="institution"
             value={institution}
             onChange={(e) => handleChange(e, parentKey)}
+            onBlur={handleValidation}
             required
           />
         </div>
@@ -41,6 +46,7 @@ const EducationForm = (props) => {
             name="degree"
             value={degree}
             onChange={(e) => handleChange(e, parentKey)}
+            onBlur={handleValidation}
             required
           />
         </div>
@@ -68,6 +74,11 @@ class Education extends React.Component {
     this.props.onInputChange(key, index, value);
   };
 
+  handleValidation = (e) => {
+    this.props.validateOnBlur(e);
+  };
+
+
   render() {
     const { education, parentKey } = this.props;
 
@@ -81,6 +92,7 @@ class Education extends React.Component {
             key={institution.id}
             onClick={this.handleClick}
             handleChange={this.handleChange}
+            onBlur={this.handleValidation}
             parentKey={parentKey}
           />
         ))}

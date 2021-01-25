@@ -1,9 +1,15 @@
 import React from "react";
+import Error from './ErrorSpan'
 
 class PersonalInfo extends React.Component {
-  handleChange = (key, name, e) => {
-    this.props.onInputChange(key, name, e.target.value);
+  handleChange = (key, e) => {
+    const { name, value } = e.target;
+    this.props.onInputChange(key, name, value);
   };
+
+  handleValidation = (e) => {
+      this.props.validateOnBlur(e);
+  }
 
   render() {
     const { personalData } = this.props;
@@ -16,9 +22,12 @@ class PersonalInfo extends React.Component {
           <input
             type="text"
             value={personalData.name}
-            onChange={(e) => this.handleChange(key, "name", e)}
+            name='name'
+            onChange={(e) => this.handleChange(key, e)}
+            onBlur={this.handleValidation}
             required
           />
+          <Error isError={true}/>
         </div>
         <div>
           <label htmlFor="lastName">Last Name</label>
@@ -26,7 +35,8 @@ class PersonalInfo extends React.Component {
             type="text"
             name="lastName"
             value={personalData.lastName}
-            onChange={(e) => this.handleChange(key, "lastName", e)}
+            onChange={(e) => this.handleChange(key, e)}
+            onBlur={this.handleValidation}
             required
           />
         </div>
@@ -37,7 +47,8 @@ class PersonalInfo extends React.Component {
             type="email"
             name="email"
             value={personalData.email}
-            onChange={(e) => this.handleChange(key, "email", e)}
+            onChange={(e) => this.handleChange(key, e)}
+            onBlur={this.handleValidation}
             required
           />
         </div>
@@ -47,7 +58,8 @@ class PersonalInfo extends React.Component {
             type="tel"
             name="phone"
             required
-            onChange={(e) => this.handleChange(key, "phone", e)}
+            onChange={(e) => this.handleChange(key, e)}
+            onBlur={this.handleValidation}
             value={personalData.phone}
           />
         </div>
