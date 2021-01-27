@@ -10,6 +10,14 @@
   color:white;
 }
 
+.error {
+  display: none;
+}
+
+.error-active {
+  display: block;
+}
+
 .skill-list > ul > li:hover  .delete.button {
   display: inline-block;
 }
