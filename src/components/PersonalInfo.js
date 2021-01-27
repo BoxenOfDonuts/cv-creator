@@ -1,5 +1,5 @@
-import React from "react";
-import Error from './ErrorSpan'
+import React from 'react';
+import Error from './ErrorSpan';
 
 class PersonalInfo extends React.Component {
   handleChange = (key, e) => {
@@ -8,11 +8,11 @@ class PersonalInfo extends React.Component {
   };
 
   handleValidation = (e) => {
-      this.props.validateOnBlur(e);
-  }
+    this.props.validateOnBlur(e);
+  };
 
   render() {
-    const { personalData } = this.props;
+    const { personalData, errors } = this.props;
     const { parentKey: key } = this.props;
 
     return (
@@ -22,12 +22,12 @@ class PersonalInfo extends React.Component {
           <input
             type="text"
             value={personalData.name}
-            name='name'
+            name="name"
             onChange={(e) => this.handleChange(key, e)}
             onBlur={this.handleValidation}
             required
           />
-          <Error isError={true}/>
+          <Error isError={errors.name} />
         </div>
         <div>
           <label htmlFor="lastName">Last Name</label>
@@ -39,6 +39,7 @@ class PersonalInfo extends React.Component {
             onBlur={this.handleValidation}
             required
           />
+          <Error isError={errors.lastName} />
         </div>
         <div></div>
         <div>
@@ -51,6 +52,7 @@ class PersonalInfo extends React.Component {
             onBlur={this.handleValidation}
             required
           />
+          <Error isError={errors.email} />
         </div>
         <div>
           <label htmlFor="phone">Phone Number</label>
@@ -62,6 +64,7 @@ class PersonalInfo extends React.Component {
             onBlur={this.handleValidation}
             value={personalData.phone}
           />
+          <Error isError={errors.phone} />
         </div>
       </div>
     );

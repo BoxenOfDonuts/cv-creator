@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
+import Error from './ErrorSpan';
 
 const EducationForm = (props) => {
   const { institution, degree, graduationDate } = props.education;
-  const { index, parentKey } = props;
+  const { index, parentKey, errors } = props;
 
   const handleClick = (index) => {
     props.onClick(index);
   };
 
   const handleChange = (e, key) => {
-    console.log(key);
     const { name, value } = e.target;
     const form = {
       ...props.education,
@@ -19,8 +19,8 @@ const EducationForm = (props) => {
   };
 
   const handleValidation = (e) => {
-      props.onBlur(e);
-  }
+    props.onBlur(e);
+  };
 
   return (
     <div>
@@ -38,6 +38,7 @@ const EducationForm = (props) => {
             onBlur={handleValidation}
             required
           />
+          <Error isError={errors.institution} />
         </div>
         <div>
           <label htmlFor="degree">Degree</label>
@@ -50,6 +51,7 @@ const EducationForm = (props) => {
             required
           />
         </div>
+        <Error isError={errors.degree} />
         <div>
           <label htmlFor="graduationDate">Graduation Date</label>
           <input
@@ -59,6 +61,7 @@ const EducationForm = (props) => {
             onChange={(e) => handleChange(e, parentKey)}
             required
           />
+          <Error isError={errors.graduationDate} />
         </div>
       </form>
     </div>
@@ -78,9 +81,8 @@ class Education extends React.Component {
     this.props.validateOnBlur(e);
   };
 
-
   render() {
-    const { education, parentKey } = this.props;
+    const { education, parentKey, errors } = this.props;
 
     return (
       <div className="education">
@@ -94,6 +96,7 @@ class Education extends React.Component {
             handleChange={this.handleChange}
             onBlur={this.handleValidation}
             parentKey={parentKey}
+            errors={errors}
           />
         ))}
       </div>

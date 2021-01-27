@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const ExperienceForm = (props) => {
   const { company, title, tenureStart, tenureEnd } = props.experience;
@@ -21,7 +21,7 @@ const ExperienceForm = (props) => {
 
   const handleValidation = (e) => {
     props.onBlur(e);
-}
+  };
 
   return (
     <div>
