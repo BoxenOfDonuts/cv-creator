@@ -7,88 +7,13 @@ import Skills from './components/Skills';
 import Education from './components/Education';
 import Experience from './components/Experience';
 
-const formValidation = (() => {
-  const validateAll = (form) => {
-    const fields = Array.from(form.querySelectorAll('.input'));
-    let valid = true;
-    fields.forEach((field) => {
-      if (!field.validity.valid) {
-        errorDisplay.showError(field);
-        valid = false;
-      }
-    });
-
-    return valid;
-  };
-
-  const _validateSingleInput = (element) => {
-    if (element.validity.valid) {
-      return errorDisplay.clearError();
-    } else {
-      return errorDisplay.showError(element);
-    }
-  };
-
-  const email = (element) => {
-    return _validateSingleInput(element);
-  };
-
-  const country = (element) => {
-    return _validateSingleInput(element);
-  };
-
-  const zipcode = (element) => {
-    return _validateSingleInput(element);
-  };
-
-  const text = (elememnt) => {
-    return _validateSingleInput(elememnt);
-  };
-
-  const tel = (element) => {
-    return _validateSingleInput(element);
-  };
-
-  const textarea = (element) => {
-    return _validateSingleInput(element);
-  };
-
-  return { email, country, zipcode, text, tel, textarea, validateAll };
-})();
-
-const errorDisplay = (() => {
-  const showError = (element) => {
-    let textContent = '';
-    if (element.validity.valueMissing) {
-      textContent = 'Please enter a value';
-    } else if (element.validity.typeMismatch) {
-      textContent = `please enter a valid ${element.name}`;
-    } else if (element.validity.tooShort || element.validity.tooLong) {
-      textContent = `Field should be at between ${element.minLength} and ${element.maxLength} characters`;
-    } else if (element.validity.rangeUnderflow) {
-      textContent = `Every book has at least ${element.min} page`;
-    } else if (element.validity.patternMismatch) {
-      textContent = `please enter a vlid ${element.name}`;
-    } else if (!formValidation.passwordsMatch()) {
-      textContent = "Passwords don't match!";
-    }
-    return textContent;
-  };
-
-  const clearError = () => {
-    return '';
-  };
-  return {
-    clearError,
-    showError,
-  };
-})();
-
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      edit: true,
+      errors: {},
       personal: {
         name: '',
         lastName: '',
@@ -102,6 +27,7 @@ class App extends React.Component {
           degree: '',
           graduationDate: '',
           id: uuid(),
+          errors: {},
         },
       ],
       experience: [
@@ -113,7 +39,6 @@ class App extends React.Component {
           id: uuid(),
         },
       ],
-      errors: {},
     };
   }
 
@@ -206,54 +131,48 @@ class App extends React.Component {
     });
   };
 
-  handleFormValidation = (e) => {
-    let element = e.target;
-    console.log(element);
-    if (element) {
-      const validationValue = formValidation[element.type](element)
-      this.setState({
-        errors: {
-          ...this.state.errors,
-          [element.name]: validationValue,
-        },
-      });
-    }
-  };
+  handleFormValidation  = (e) => {
+    const { name, value } = e.target;
+    const isEmpty = !value;  
+    // const errorValue = value ? '': "Please Enter A Value"
 
-  handleSkillSubmit = (e) => {
-    const formElements = Array.from(e.target.elements)
-    formElements.forEach((element) => {
-      if (element.name.length > 0) {
-        this.setState((state) => {
-          const { name } = element;
-          const validationValue = formValidation[element.type](element);
-          const errors = {...state.errors, [name]: validationValue}
-          return {errors,}
-        })
-        
-      }
-    })
+    // this.setState((state) => {
+    //   return {
+    //     errors: {...state.errors, [name]: errorValue}}
+    // })
   }
 
-  validateForm = (e) => {
+  editCV = () => {
+    this.setState({
+      edit: true,
+    });
+  }
+
+  submitForm = () => {
+    this.setState({
+      edit: false,
+    });
   }
 
   render() {
     return (
       <div>
         <Header />
+        <button onClick={this.editCV}>Edit</button>
+
         <PersonalInfo
           personalData={this.state.personal}
           onInputChange={this.handleChange}
           parentKey={'personal'}
           validateOnBlur={this.handleFormValidation}
           errors={this.state.errors}
+          editing={this.state.edit}
         />
         <Skills
           skills={this.state.skills}
           onSkillUpdate={this.handleSkillChange}
           onSkillSubmit={this.handleSkillSubmit}
-          errors={this.state.errors}
+          editing={this.state.edit}
         />
         <Education
           education={this.state.education}
@@ -285,9 +204,7 @@ class App extends React.Component {
           Add
         </button>
         <br />
-        {/* <Education education={this.state.education} onDelete={this.addAnotherSection} /> */}
-        {/* <Experience experience={this.state.experience} /> */}
-        <button onClick={this.validateForm}>Submit</button>
+        <button onClick={this.submitForm}>Submit</button>
       </div>
     );
   }

@@ -1,5 +1,4 @@
 import React from 'react';
-import Error from './ErrorSpan';
 
 class Skills extends React.Component {
   constructor(state) {
@@ -50,7 +49,7 @@ class Skills extends React.Component {
 
   render() {
     const { list, value } = this.state;
-    const { errors } = this.props;
+    const { editing } = this.props;
     const listItems = list.map((skill, index) => {
       return (
         <li key={skill.toString()}>
@@ -79,7 +78,6 @@ class Skills extends React.Component {
             ></input>
           </label>
           <button type="submit">Submit</button>
-          <Error isError={errors.content} />
         </form>
         <div className="skill-list">
           <ul>{listItems}</ul>
