@@ -50,6 +50,8 @@ class Skills extends React.Component {
   render() {
     const { list, value } = this.state;
     const { editing } = this.props;
+    let input ='';
+    
     const listItems = list.map((skill, index) => {
       return (
         <li key={skill.toString()}>
@@ -64,21 +66,25 @@ class Skills extends React.Component {
       );
     });
 
+    if (editing) {
+      input = <form onSubmit={this.handleSubmit} noValidate>
+      <label>
+        <input
+          type="text"
+          name="content"
+          value={value}
+          onChange={this.handleChange}
+          required
+        ></input>
+      </label>
+      <button type="submit">Submit</button>
+    </form>
+    }
+
     return (
       <div>
         <h3>Technical Skills and Capalilities</h3>
-        <form onSubmit={this.handleSubmit} noValidate>
-          <label>
-            <input
-              type="text"
-              name="content"
-              value={value}
-              onChange={this.handleChange}
-              required
-            ></input>
-          </label>
-          <button type="submit">Submit</button>
-        </form>
+        {input}
         <div className="skill-list">
           <ul>{listItems}</ul>
         </div>

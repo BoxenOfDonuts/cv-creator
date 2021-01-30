@@ -181,6 +181,8 @@ class App extends React.Component {
           parentKey={'education'}
           validateOnBlur={this.handleFormValidation}
           errors={this.state.errors}
+          editing={this.state.edit}
+
         />
         <button
           className="add-button button"
@@ -195,6 +197,7 @@ class App extends React.Component {
           onInputChange={this.handleEducationChange}
           parentKey={'experience'}
           validateOnBlur={this.handleFormValidation}
+          editing={this.state.edit}
         />
         <button
           className="add-button button"

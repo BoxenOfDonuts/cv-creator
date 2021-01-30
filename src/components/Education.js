@@ -5,26 +5,18 @@ const EducationForm = (props) => {
   const { institution, degree, graduationDate } = props.education;
   const { index, parentKey, errors } = props;
 
-  const handleClick = (index) => {
-    props.onClick(index);
-  };
-
-  const handleChange = (e, key) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     const form = {
       ...props.education,
       [name]: value,
     };
-    props.handleChange(key, index, form);
-  };
-
-  const handleValidation = (e) => {
-    props.onBlur(e);
+    props.handleChange(index, form);
   };
 
   return (
     <div>
-      <button type="button" onClick={() => handleClick(index)}>
+      <button type="button" onClick={() => props.onClick()}>
         Delete
       </button>
       <form>
@@ -35,7 +27,7 @@ const EducationForm = (props) => {
             name="institution"
             value={institution}
             onChange={(e) => handleChange(e, parentKey)}
-            onBlur={handleValidation}
+            onBlur={props.onBlur}
             required
           />
           <Error isError={errors.institution} />
@@ -47,7 +39,7 @@ const EducationForm = (props) => {
             name="degree"
             value={degree}
             onChange={(e) => handleChange(e, parentKey)}
-            onBlur={handleValidation}
+            onBlur={props.onBlur}
             required
           />
         </div>
@@ -66,42 +58,55 @@ const EducationForm = (props) => {
       </form>
     </div>
   );
-};
+};  
+
+const PrintedFieldItems = (props) => {
+  const {education } = props;
+
+  return (
+    <div>
+      <p>{education.institution}</p>
+      <p>{education.degree}</p>
+      <p>{education.graduationDate}</p>
+    </div>
+  );
+}
 
 class Education extends React.Component {
-  handleClick = (index) => {
-    this.props.onClick(index);
-  };
-
-  handleChange = (key, index, value) => {
-    this.props.onInputChange(key, index, value);
-  };
-
-  handleValidation = (e) => {
-    this.props.validateOnBlur(e);
-  };
-
   render() {
-    const { education, parentKey, errors } = this.props;
+    const { education, parentKey, errors, editing } = this.props;
+    let field = '';
+
+    if (editing) {
+      field = education.map((institution, index) =>
+        <EducationForm
+            education={institution}
+            index={index}
+            key={institution.id}
+            onClick={() => this.props.onClick(index)}
+            handleChange={(index, value) => this.props.onInputChange(parentKey, index, value)}
+            onBlur={(e) => this.props.validateOnBlur(e)}
+            parentKey={parentKey}
+            errors={errors}
+        />      
+      )
+    } else {
+      field = education.map((institution) => 
+        <PrintedFieldItems
+        education={institution}
+      />  
+      )
+    }  
+
+    console.log(field)
 
     return (
       <div className="education">
         <h3>Education</h3>
-        {education.map((institution, index) => (
-          <EducationForm
-            education={institution}
-            index={index}
-            key={institution.id}
-            onClick={this.handleClick}
-            handleChange={this.handleChange}
-            onBlur={this.handleValidation}
-            parentKey={parentKey}
-            errors={errors}
-          />
-        ))}
-      </div>
+        {field}
+      </div>    
     );
-  }
-}
+  }  
+}  
 
 export default Education;
