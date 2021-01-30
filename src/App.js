@@ -155,11 +155,15 @@ class App extends React.Component {
   }
 
   render() {
+    let btnClassname = 'add-button button';
+
+    if (!this.state.edit) {
+      btnClassname += ' editing';
+    }
+
     return (
       <div>
         <Header />
-        <button onClick={this.editCV}>Edit</button>
-
         <PersonalInfo
           personalData={this.state.personal}
           onInputChange={this.handleChange}
@@ -185,7 +189,7 @@ class App extends React.Component {
 
         />
         <button
-          className="add-button button"
+          className={btnClassname}
           data-id="education"
           onClick={this.addAnotherSection}
         >
@@ -200,7 +204,7 @@ class App extends React.Component {
           editing={this.state.edit}
         />
         <button
-          className="add-button button"
+          className={btnClassname}
           data-id="experience"
           onClick={this.addAnotherSection}
         >
@@ -208,6 +212,7 @@ class App extends React.Component {
         </button>
         <br />
         <button onClick={this.submitForm}>Submit</button>
+        <button onClick={this.editCV}>Edit</button>
       </div>
     );
   }
