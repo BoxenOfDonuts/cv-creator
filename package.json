@@ -13,7 +13,7 @@
     "uuid": "^8.3.2",
     "web-vitals": "^0.2.4"
   },
-  "home": "https://boxenofdonuts.github.io/cv-creator/",
+  "homepage": "https://boxenofdonuts.github.io/cv-creator/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
