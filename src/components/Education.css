@@ -1,0 +1,27 @@
+.education.section form, .experience.section form {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    row-gap: 5px;
+    text-align: left;
+    width: 400px;
+    margin: auto;
+}
+
+label {
+    margin-right: 10px;
+}
+
+.form-wrapper {
+    position: relative;
+}
+
+.form-wrapper > button {
+    position: absolute;
+    right: 15px;
+    background-color: rgb(200, 0, 0);    
+}
+
+textarea {
+    max-width: 450px;
+}
+

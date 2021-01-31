@@ -1,4 +1,5 @@
 import React from 'react';
+import './Personal.css'
 
 class PersonalInfo extends React.Component {
   handleChange = (e) => {
@@ -27,7 +28,7 @@ class PersonalInfo extends React.Component {
     }
 
     return (
-      <div className="person-info">
+      <div className="personal-info section">
         <h3>Personal Information</h3>
         {field}
       </div>
@@ -53,8 +54,8 @@ const InputField = (props) => {
   const { personalData } = props;
 
   return (
-    <div>
-      <div>
+    <div className="form-wrapper">
+      <form>
         <label htmlFor="firstName">First Name</label>
         <input
           type="text"
@@ -64,8 +65,7 @@ const InputField = (props) => {
           onBlur={props.onBlur}
           required
         />
-      </div>
-      <div>
+
         <label htmlFor="lastName">Last Name</label>
         <input
           type="text"
@@ -75,9 +75,7 @@ const InputField = (props) => {
           onBlur={props.onBlur}
           required
         />
-      </div>
-      <div></div>
-      <div>
+
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -87,8 +85,6 @@ const InputField = (props) => {
           onBlur={props.onBlur}
           required
         />
-      </div>
-      <div>
         <label htmlFor="phone">Phone Number</label>
         <input
           type="tel"
@@ -98,7 +94,7 @@ const InputField = (props) => {
           onBlur={props.onBlur}
           required
         />
-      </div>
+      </form>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Skills.css'
 
 class Skills extends React.Component {
   constructor(state) {
@@ -18,20 +19,16 @@ class Skills extends React.Component {
 
   handleSubmit = (e) => {
     console.log(this.props);
-    e.preventDefault();
     if (this.state.value)
       this.setState((state) => {
         const list = [...state.list, state.value];
         this.props.onSkillUpdate(list);
-        this.isValid(this.state.value);
+        e.preventDefault();
         return {
           list,
           value: '',
         };
       });
-    else {
-      this.props.onSkillSubmit(e);
-    }
   };
 
   handleRemove = (index) => {
@@ -53,11 +50,15 @@ class Skills extends React.Component {
     let input ='';
     
     const listItems = list.map((skill, index) => {
+      let btnClassName = 'delete button';
+      if (editing) {
+        btnClassName += ' editing'
+      }
       return (
         <li key={skill.toString()}>
           {skill}
           <span
-            className="delete button"
+            className={btnClassName}
             onClick={() => this.handleRemove(index)}
           >
             {'Delete Me'}
@@ -67,25 +68,27 @@ class Skills extends React.Component {
     });
 
     if (editing) {
-      input = <form onSubmit={this.handleSubmit} noValidate>
-      <label>
-        <input
-          type="text"
-          name="content"
-          value={value}
-          onChange={this.handleChange}
-          required
-        ></input>
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+      input =
+        <form className={'skill-form'} onSubmit={this.handleSubmit}>
+          <label>
+            <input
+              type="text"
+              name="content"
+              value={value}
+              onChange={this.handleChange}
+              placeholder="Press enter to add a skill"
+              required
+            ></input>
+          </label>
+          {/* <button className='button submit' type="submit">Submit</button> */}
+        </form>
     }
 
     return (
-      <div>
+      <div className="skill-list section">
         <h3>Technical Skills and Capalilities</h3>
         {input}
-        <div className="skill-list">
+        <div>
           <ul>{listItems}</ul>
         </div>
       </div>

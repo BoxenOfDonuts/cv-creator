@@ -131,15 +131,8 @@ class App extends React.Component {
     });
   };
 
-  handleFormValidation  = (e) => {
-    const { name, value } = e.target;
-    const isEmpty = !value;  
-    // const errorValue = value ? '': "Please Enter A Value"
+  handleSkillSubmit = () => {
 
-    // this.setState((state) => {
-    //   return {
-    //     errors: {...state.errors, [name]: errorValue}}
-    // })
   }
 
   editCV = () => {
@@ -156,63 +149,77 @@ class App extends React.Component {
 
   render() {
     let btnClassname = 'add-button button';
+    let footerBtnClassname = 'button'
 
     if (!this.state.edit) {
-      btnClassname += ' editing';
+      btnClassname += ' viewing';
+      footerBtnClassname += ' viewing'
     }
 
     return (
       <div>
-        <Header />
-        <PersonalInfo
-          personalData={this.state.personal}
-          onInputChange={this.handleChange}
-          parentKey={'personal'}
-          validateOnBlur={this.handleFormValidation}
-          errors={this.state.errors}
-          editing={this.state.edit}
-        />
-        <Skills
-          skills={this.state.skills}
-          onSkillUpdate={this.handleSkillChange}
-          onSkillSubmit={this.handleSkillSubmit}
-          editing={this.state.edit}
-        />
-        <Education
-          education={this.state.education}
-          onClick={this.deleteEducation}
-          onInputChange={this.handleEducationChange}
-          parentKey={'education'}
-          validateOnBlur={this.handleFormValidation}
-          errors={this.state.errors}
-          editing={this.state.edit}
+        <Header title={'Resume Creator'}/>
+        <div className="resume">
+          <PersonalInfo
+            personalData={this.state.personal}
+            onInputChange={this.handleChange}
+            parentKey={'personal'}
+            editing={this.state.edit}
+          />
+          <Skills
+            skills={this.state.skills}
+            onSkillUpdate={this.handleSkillChange}
+            onSkillSubmit={this.handleSkillSubmit}
+            editing={this.state.edit}
+          />
+          <Education
+            education={this.state.education}
+            onClick={this.deleteEducation}
+            onInputChange={this.handleEducationChange}
+            parentKey={'education'}
+            editing={this.state.edit}
 
-        />
-        <button
-          className={btnClassname}
-          data-id="education"
-          onClick={this.addAnotherSection}
-        >
-          Add
-        </button>
-        <Experience
-          experience={this.state.experience}
-          onClick={this.deleteExperience}
-          onInputChange={this.handleEducationChange}
-          parentKey={'experience'}
-          validateOnBlur={this.handleFormValidation}
-          editing={this.state.edit}
-        />
-        <button
-          className={btnClassname}
-          data-id="experience"
-          onClick={this.addAnotherSection}
-        >
-          Add
-        </button>
-        <br />
-        <button onClick={this.submitForm}>Submit</button>
-        <button onClick={this.editCV}>Edit</button>
+          />
+          <div>
+            <button
+              className={btnClassname}
+              data-id="education"
+              onClick={this.addAnotherSection}
+            >
+              Add
+            </button>            
+          </div>
+
+          <Experience
+            experience={this.state.experience}
+            onClick={this.deleteExperience}
+            onInputChange={this.handleEducationChange}
+            parentKey={'experience'}
+            editing={this.state.edit}
+          />
+          <div>
+            <button
+              className={btnClassname}
+              data-id="experience"
+              onClick={this.addAnotherSection}
+            >
+              Add
+            </button>            
+          </div>
+
+          <br />
+          <div className="footer-buttons">
+            <button
+              className={this.state.edit ? 'button submit active': 'button submit'}
+              onClick={this.submitForm}>Submit
+            </button>
+            <button
+              className={this.state.edit ? 'button edit': 'button edit active'}
+              onClick={this.editCV}>Edit
+            </button>            
+          </div>
+
+        </div>
       </div>
     );
   }

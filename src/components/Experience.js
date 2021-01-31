@@ -1,4 +1,5 @@
 import React from 'react';
+import './Education.css'
 
 const ExperienceForm = (props) => {
   const { company, title, tenureStart, tenureEnd, experience } = props.experience;
@@ -15,33 +16,28 @@ const ExperienceForm = (props) => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={props.onClick}>
+    <div className="form-wrapper">
+      <button className="button delete-section" type="button" onClick={props.onClick}>
         Delete
       </button>
-      <div>
+      <form>
         <label htmlFor="company">Company Name</label>
         <input
           type="text"
           name="company"
           value={company}
           onChange={(e) => handleChange(e, parentKey)}
-          onBlur={props.onBlur}
           required
         />
-      </div>
-      <div>
         <label htmlFor="title">Job Title</label>
         <input
           type="text"
           name="title"
           value={title}
           onChange={(e) => handleChange(e)}
-          onBlur={props.onBlur}
           required
         />
-      </div>
-      <div>
+
         <label htmlFor="tenureStart">Start Day</label>
         <input
           type="date"
@@ -50,8 +46,7 @@ const ExperienceForm = (props) => {
           onChange={(e) => handleChange(e, parentKey)}
           required
         />
-      </div>
-      <div>
+
         <label htmlFor="tenureEnd">End Date</label>
         <input
           type="date"
@@ -60,8 +55,7 @@ const ExperienceForm = (props) => {
           onChange={(e) => handleChange(e, parentKey)}
           required
         />
-      </div>
-      <div>
+
         <label htmlFor="experience">Experience</label>
         <textarea
           name="experience"
@@ -69,9 +63,8 @@ const ExperienceForm = (props) => {
           rows="10"
           value={experience}
           onChange={(e) => handleChange(e, parentKey)}
-          onBlur={props.onBlur}
         ></textarea>
-      </div>
+      </form>
     </div>
   );
 };
@@ -117,7 +110,7 @@ class Experience extends React.Component {
     }
 
     return (
-      <div className="experience">
+      <div className="experience section">
         <h3>Experience</h3>
         {field}
       </div>

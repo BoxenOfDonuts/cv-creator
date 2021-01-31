@@ -1,9 +1,9 @@
 import React from 'react';
-import Error from './ErrorSpan';
+import './Education.css'
 
 const EducationForm = (props) => {
   const { institution, degree, graduationDate } = props.education;
-  const { index, parentKey, errors } = props;
+  const { index, parentKey } = props;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -15,12 +15,11 @@ const EducationForm = (props) => {
   };
 
   return (
-    <div>
-      <button type="button" onClick={() => props.onClick()}>
+    <div className="form-wrapper">
+      <button className="button delete-section" type="button" onClick={() => props.onClick()}>
         Delete
       </button>
       <form>
-        <div>
           <label htmlFor="institution">Institution</label>
           <input
             type="text"
@@ -30,9 +29,6 @@ const EducationForm = (props) => {
             onBlur={props.onBlur}
             required
           />
-          <Error isError={errors.institution} />
-        </div>
-        <div>
           <label htmlFor="degree">Degree</label>
           <input
             type="text"
@@ -42,9 +38,6 @@ const EducationForm = (props) => {
             onBlur={props.onBlur}
             required
           />
-        </div>
-        <Error isError={errors.degree} />
-        <div>
           <label htmlFor="graduationDate">Graduation Date</label>
           <input
             type="date"
@@ -53,8 +46,6 @@ const EducationForm = (props) => {
             onChange={(e) => handleChange(e, parentKey)}
             required
           />
-          <Error isError={errors.graduationDate} />
-        </div>
       </form>
     </div>
   );
@@ -74,7 +65,7 @@ const PrintedFieldItems = (props) => {
 
 class Education extends React.Component {
   render() {
-    const { education, parentKey, errors, editing } = this.props;
+    const { education, parentKey, editing } = this.props;
     let field = '';
 
     if (editing) {
@@ -85,9 +76,7 @@ class Education extends React.Component {
             key={institution.id}
             onClick={() => this.props.onClick(index)}
             handleChange={(index, value) => this.props.onInputChange(parentKey, index, value)}
-            onBlur={(e) => this.props.validateOnBlur(e)}
             parentKey={parentKey}
-            errors={errors}
         />      
       )
     } else {
@@ -101,7 +90,7 @@ class Education extends React.Component {
     console.log(field)
 
     return (
-      <div className="education">
+      <div className="education section">
         <h3>Education</h3>
         {field}
       </div>    
