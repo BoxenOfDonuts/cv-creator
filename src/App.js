@@ -130,21 +130,17 @@ class App extends React.Component {
     });
   };
 
-  handleSkillSubmit = () => {
-
-  }
-
   editCV = () => {
     this.setState({
       edit: true,
     });
-  }
+  };
 
   submitForm = () => {
     this.setState({
       edit: false,
     });
-  }
+  };
 
   render() {
     let btnClassname = 'add-button button';
@@ -155,7 +151,7 @@ class App extends React.Component {
 
     return (
       <div>
-        <Header title={'Resume Creator'}/>
+        <Header title={'Resume Creator'} />
         <div className="resume">
           <PersonalInfo
             personalData={this.state.personal}
@@ -175,7 +171,6 @@ class App extends React.Component {
             onInputChange={this.handleEducationChange}
             parentKey={'education'}
             editing={this.state.edit}
-
           />
           <div>
             <button
@@ -184,7 +179,7 @@ class App extends React.Component {
               onClick={this.addAnotherSection}
             >
               Add
-            </button>            
+            </button>
           </div>
 
           <Experience
@@ -201,21 +196,26 @@ class App extends React.Component {
               onClick={this.addAnotherSection}
             >
               Add
-            </button>            
+            </button>
           </div>
 
           <br />
           <div className="footer-buttons">
             <button
-              className={this.state.edit ? 'button submit': 'button submit active'}
-              onClick={this.submitForm}>Submit
+              className={
+                this.state.edit ? 'button submit' : 'button submit active'
+              }
+              onClick={this.submitForm}
+            >
+              Submit
             </button>
             <button
-              className={this.state.edit ? 'button edit active': 'button edit'}
-              onClick={this.editCV}>Edit
-            </button>            
+              className={this.state.edit ? 'button edit active' : 'button edit'}
+              onClick={this.editCV}
+            >
+              Edit
+            </button>
           </div>
-
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Skills.css'
+import './Skills.css';
 
 class Skills extends React.Component {
   constructor(state) {
@@ -47,49 +47,45 @@ class Skills extends React.Component {
   skillFormatting = (count) => {
     let columns = 0;
     let rows = 0;
-    
-    if (count % 4 === 0 ) {
+
+    if (count % 4 === 0) {
       columns = 4;
       rows = count / 4;
     } else if (count % 3 === 0) {
       columns = 3;
       rows = count / 3;
-    } else if ( count === 5 || count === 10) {
+    } else if (count === 5 || count === 10) {
       columns = 5;
       rows = count / 5;
     } else if (count === 2) {
       columns = 2;
-      rows = 1
+      rows = 1;
     }
 
     const gridStyle = {
       gridTemplateColumns: `repeat(${columns}, 1fr)`,
       gridTemplateRows: `repeat(${rows}, 1fr)`,
-    }
+    };
 
     return gridStyle;
-  }
-
+  };
 
   render() {
     const { list, value } = this.state;
     const { editing } = this.props;
-    let input ='';
-    const gridStyle = this.skillFormatting(list.length)
+    let input = '';
+    const gridStyle = this.skillFormatting(list.length);
 
     const listItems = list.map((skill, index) => {
       return (
-        <li
-          onClick={() =>this.handleRemove(index)}
-          key={skill.toString()}
-        >
-          <span className='delete-skill'>{skill}</span>
+        <li onClick={() => this.handleRemove(index)} key={skill.toString()}>
+          <span className="delete-skill">{skill}</span>
         </li>
       );
     });
 
     if (editing) {
-      input =
+      input = (
         <form className={'skill-form'} onSubmit={this.handleSubmit}>
           <label>
             <input
@@ -102,6 +98,7 @@ class Skills extends React.Component {
             ></input>
           </label>
         </form>
+      );
     }
 
     return (
@@ -109,11 +106,7 @@ class Skills extends React.Component {
         <h3>Technical Skills and Capalilities</h3>
         {input}
         <div>
-          <ul
-            style={gridStyle}
-          >
-            {listItems}
-          </ul>
+          <ul style={gridStyle}>{listItems}</ul>
         </div>
       </div>
     );

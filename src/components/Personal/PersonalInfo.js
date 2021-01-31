@@ -1,5 +1,5 @@
 import React from 'react';
-import './Personal.css'
+import './Personal.css';
 
 class PersonalInfo extends React.Component {
   handleChange = (e) => {
@@ -16,15 +16,15 @@ class PersonalInfo extends React.Component {
     let field = '';
 
     if (editing) {
-      field = <InputField
-        personalData={personalData}
-        onChange={this.handleChange}
-        onblur={this.handleValidation}
-      />
+      field = (
+        <InputField
+          personalData={personalData}
+          onChange={this.handleChange}
+          onblur={this.handleValidation}
+        />
+      );
     } else {
-      field = <PrintedField 
-        personalData={personalData}
-      />
+      field = <PrintedField personalData={personalData} />;
     }
 
     return (
@@ -36,23 +36,22 @@ class PersonalInfo extends React.Component {
   }
 }
 
-
 const PrintedField = (props) => {
-  const {personalData } = props;
+  const { personalData } = props;
 
   return (
     <div className="preview-text">
-    <div className="name">
-      <p >{personalData.name}</p>
-      <p>{personalData.lastName}</p>
-    </div>
-    <div className="contact">
-      <p>{personalData.email}</p>
-      <p className="text-align-right">{personalData.phone}</p>
-    </div>
+      <div className="name">
+        <p>{personalData.name}</p>
+        <p>{personalData.lastName}</p>
+      </div>
+      <div className="contact">
+        <p>{personalData.email}</p>
+        <p className="text-align-right">{personalData.phone}</p>
+      </div>
     </div>
   );
-}
+};
 
 const InputField = (props) => {
   const { personalData } = props;
@@ -101,6 +100,6 @@ const InputField = (props) => {
       </form>
     </div>
   );
-}
+};
 
 export default PersonalInfo;

@@ -1,8 +1,14 @@
 import React from 'react';
-import './Education.css'
+import './Education.css';
 
 const ExperienceForm = (props) => {
-  const { company, title, tenureStart, tenureEnd, experience } = props.experience;
+  const {
+    company,
+    title,
+    tenureStart,
+    tenureEnd,
+    experience,
+  } = props.experience;
   const { index, parentKey } = props;
 
   const handleChange = (e) => {
@@ -17,7 +23,11 @@ const ExperienceForm = (props) => {
 
   return (
     <div className="form-wrapper">
-      <button className="button delete-section" type="button" onClick={props.onClick}>
+      <button
+        className="button delete-section"
+        type="button"
+        onClick={props.onClick}
+      >
         Delete
       </button>
       <form>
@@ -65,7 +75,7 @@ const ExperienceForm = (props) => {
           onChange={(e) => handleChange(e, parentKey)}
         ></textarea>
       </form>
-      <br/>
+      <br />
     </div>
   );
 };
@@ -77,7 +87,7 @@ const PrintedFieldItems = (props) => {
 
   return (
     <div className="preview-text">
-      <p className='bold'>{experience.company}</p>
+      <p className="bold">{experience.company}</p>
       <div className="title-and-date">
         <p>{experience.title}</p>
         <p>{tenureStartFormatted + ' - ' + tenureEndFormatted}</p>
@@ -85,32 +95,31 @@ const PrintedFieldItems = (props) => {
       <pre>{experience.experience}</pre>
     </div>
   );
-}
-
+};
 
 class Experience extends React.Component {
   render() {
     const { experience, parentKey, editing } = this.props;
-    let field = ''; 
+    let field = '';
 
     if (editing) {
-      field = experience.map((company, index) => 
+      field = experience.map((company, index) => (
         <ExperienceForm
           key={company.id}
           experience={company}
           index={index}
           onClick={() => this.props.onClick(index)}
           onBlur={(e) => this.props.validateOnBlur(e)}
-          handleChange={(index, value) => this.props.onInputChange(parentKey, index, value)}
+          handleChange={(index, value) =>
+            this.props.onInputChange(parentKey, index, value)
+          }
           parentKey={parentKey}
         />
-      )
+      ));
     } else {
-      field = experience.map((company) =>
-        <PrintedFieldItems 
-          experience={company}
-        />
-      )
+      field = experience.map((company) => (
+        <PrintedFieldItems experience={company} />
+      ));
     }
 
     return (
