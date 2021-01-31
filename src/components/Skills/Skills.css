@@ -7,14 +7,21 @@
     border:0;
     padding-left: 10px;
     box-sizing: border-box;
+    margin-bottom: 10px;
 
 }
 
-/* .submit.button {
-    border-radius: 0 4px 4px 0;
-    padding: 0px;
-} */
+.delete-skill:hover {
+    text-decoration: line-through;
+    color: red;
+}
 
 ul {
     list-style-type: none;
+    margin: 0 30px;
+    display: grid;
+}
+
+ul > li {
+    margin-bottom: 10px;
 }

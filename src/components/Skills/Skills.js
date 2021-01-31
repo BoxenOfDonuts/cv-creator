@@ -44,25 +44,46 @@ class Skills extends React.Component {
     });
   };
 
+  skillFormatting = (count) => {
+    let columns = 0;
+    let rows = 0;
+    
+    if (count % 4 === 0 ) {
+      columns = 4;
+      rows = count / 4;
+    } else if (count % 3 === 0) {
+      columns = 3;
+      rows = count / 3;
+    } else if ( count === 5 || count === 10) {
+      columns = 5;
+      rows = count / 5;
+    } else if (count === 2) {
+      columns = 2;
+      rows = 1
+    }
+
+    const gridStyle = {
+      gridTemplateColumns: `repeat(${columns}, 1fr)`,
+      gridTemplateRows: `repeat(${rows}, 1fr)`,
+    }
+
+    return gridStyle;
+  }
+
+
   render() {
     const { list, value } = this.state;
     const { editing } = this.props;
     let input ='';
-    
+    const gridStyle = this.skillFormatting(list.length)
+
     const listItems = list.map((skill, index) => {
-      let btnClassName = 'delete button';
-      if (editing) {
-        btnClassName += ' editing'
-      }
       return (
-        <li key={skill.toString()}>
-          {skill}
-          <span
-            className={btnClassName}
-            onClick={() => this.handleRemove(index)}
-          >
-            {'Delete Me'}
-          </span>
+        <li
+          onClick={() =>this.handleRemove(index)}
+          key={skill.toString()}
+        >
+          <span className='delete-skill'>{skill}</span>
         </li>
       );
     });
@@ -80,7 +101,6 @@ class Skills extends React.Component {
               required
             ></input>
           </label>
-          {/* <button className='button submit' type="submit">Submit</button> */}
         </form>
     }
 
@@ -89,7 +109,11 @@ class Skills extends React.Component {
         <h3>Technical Skills and Capalilities</h3>
         {input}
         <div>
-          <ul>{listItems}</ul>
+          <ul
+            style={gridStyle}
+          >
+            {listItems}
+          </ul>
         </div>
       </div>
     );

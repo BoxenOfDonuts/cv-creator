@@ -47,18 +47,22 @@ const EducationForm = (props) => {
             required
           />
       </form>
+      <br/>
     </div>
   );
 };  
 
 const PrintedFieldItems = (props) => {
   const {education } = props;
+  const graduationDateFormatted = education.graduationDate.replaceAll('-', '/');
 
   return (
-    <div>
-      <p>{education.institution}</p>
-      <p>{education.degree}</p>
-      <p>{education.graduationDate}</p>
+    <div className="preview-text">
+      <p className="bold" >{education.institution}</p>
+      <div className="title-and-date">
+        <p>{education.degree}</p>
+        <p>{graduationDateFormatted}</p>
+      </div>
     </div>
   );
 }

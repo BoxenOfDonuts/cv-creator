@@ -41,11 +41,15 @@ const PrintedField = (props) => {
   const {personalData } = props;
 
   return (
-    <div>
-      <p>{personalData.name}</p>
+    <div className="preview-text">
+    <div className="name">
+      <p >{personalData.name}</p>
       <p>{personalData.lastName}</p>
+    </div>
+    <div className="contact">
       <p>{personalData.email}</p>
-      <p>{personalData.phone}</p>
+      <p className="text-align-right">{personalData.phone}</p>
+    </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-.personal-info.section form {
+.education.section form, .experience.section form {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     row-gap: 5px;
@@ -22,6 +22,14 @@ label {
 }
 
 textarea {
-    max-width: 95%;
+    max-width: 450px;
 }
 
+p {
+    text-align: start;
+}
+
+pre {
+    white-space: pre-wrap;
+    text-align: start;
+}

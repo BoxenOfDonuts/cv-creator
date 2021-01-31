@@ -65,20 +65,24 @@ const ExperienceForm = (props) => {
           onChange={(e) => handleChange(e, parentKey)}
         ></textarea>
       </form>
+      <br/>
     </div>
   );
 };
 
 const PrintedFieldItems = (props) => {
   const { experience } = props;
+  const tenureStartFormatted = experience.tenureStart.replaceAll('-', '/');
+  const tenureEndFormatted = experience.tenureEnd.replaceAll('-', '/');
 
   return (
-    <div>
-      <p>{experience.company}</p>
-      <p>{experience.title}</p>
-      <p>{experience.tenureStart}</p>
-      <p>{experience.tenureEnd}</p>
-      <p>{experience.experience}</p>
+    <div className="preview-text">
+      <p className='bold'>{experience.company}</p>
+      <div className="title-and-date">
+        <p>{experience.title}</p>
+        <p>{tenureStartFormatted + ' - ' + tenureEndFormatted}</p>
+      </div>
+      <pre>{experience.experience}</pre>
     </div>
   );
 }

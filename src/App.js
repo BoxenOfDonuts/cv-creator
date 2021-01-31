@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
 import { v4 as uuid } from 'uuid';
-import Header from './components/Header';
-import PersonalInfo from './components/PersonalInfo';
-import Skills from './components/Skills';
-import Education from './components/Education';
-import Experience from './components/Experience';
+import Header from './components/Header/Header';
+import PersonalInfo from './components/Personal/PersonalInfo';
+import Skills from './components/Skills/Skills';
+import Education from './components/EducationAndExperience/Education';
+import Experience from './components/EducationAndExperience/Experience';
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +46,6 @@ class App extends React.Component {
     const { id } = e.target.dataset;
     if (id === '') return;
 
-    // this may need to be computed values
     switch (id) {
       case 'education':
         this.setState((state) => {
@@ -78,7 +77,7 @@ class App extends React.Component {
         });
         break;
       default:
-      //pass
+        return;
     }
   };
 
@@ -149,11 +148,9 @@ class App extends React.Component {
 
   render() {
     let btnClassname = 'add-button button';
-    let footerBtnClassname = 'button'
 
     if (!this.state.edit) {
       btnClassname += ' viewing';
-      footerBtnClassname += ' viewing'
     }
 
     return (
@@ -210,11 +207,11 @@ class App extends React.Component {
           <br />
           <div className="footer-buttons">
             <button
-              className={this.state.edit ? 'button submit active': 'button submit'}
+              className={this.state.edit ? 'button submit': 'button submit active'}
               onClick={this.submitForm}>Submit
             </button>
             <button
-              className={this.state.edit ? 'button edit': 'button edit active'}
+              className={this.state.edit ? 'button edit active': 'button edit'}
               onClick={this.editCV}>Edit
             </button>            
           </div>

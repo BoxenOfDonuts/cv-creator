@@ -45,7 +45,7 @@ h3 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 10px 0;
+  margin-top: 10px;
 }
 
 .button {
@@ -104,7 +104,7 @@ li:hover  .delete.button.editing {
   border-radius: 4px 0 0 4px;
 }
 
-.footer-bottons .active {
+.footer-buttons .active {
   background-color: var(--button-active-color);
 }
 
@@ -117,6 +117,28 @@ li:hover  .delete.button.editing {
   height: 40vmin;
   pointer-events: none;
 }
+
+.trash-logo {
+  height: 20px;
+  vertical-align: bottom;
+}
+
+.preview-text {
+  margin: 0 30px;
+  /* display: flex;
+  flex-direction: column;
+  align-items: flex-start; */
+}
+
+.title-and-date {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 5px;
+
+}
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
