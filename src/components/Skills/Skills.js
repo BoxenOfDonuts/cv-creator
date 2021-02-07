@@ -1,29 +1,31 @@
-import React, { useState }from 'react';
+import React, { useState } from 'react';
 import './Skills.css';
 
 const Skills = (props) => {
-  const [ skillList, setSkillList ] = useState(props.skills);
-  const [ value, setValue ] = useState('');
+  const [skillList, setSkillList] = useState(props.skills);
+  const [value, setValue] = useState('');
   const { editing } = props;
 
   const handleChange = (e) => {
-    setValue(e.target.value)
+    setValue(e.target.value);
   };
 
   const handleSubmit = (e) => {
     if (value) {
-      const list = [...skillList, value]
+      const list = [...skillList, value];
       setSkillList(list);
-      props.onSkillUpdate(list)
+      props.onSkillUpdate(list);
       setValue('');
       e.preventDefault();
     }
   };
 
   const handleRemove = (index) => {
-    const list = skillList.filter((item, currentIndex ) => currentIndex !== index)
-    props.onSkillUpdate(list)
-    setSkillList(list)
+    const list = skillList.filter(
+      (item, currentIndex) => currentIndex !== index
+    );
+    props.onSkillUpdate(list);
+    setSkillList(list);
   };
 
   const skillFormatting = (count) => {
@@ -52,44 +54,43 @@ const Skills = (props) => {
     return gridStyle;
   };
 
+  let input = '';
+  const gridStyle = skillFormatting(skillList.length);
 
-    let input = '';
-    const gridStyle = skillFormatting(skillList.length);
-
-    const listItems = skillList.map((skill, index) => {
-      return (
-        <li onClick={() => handleRemove(index)} key={skill.toString()}>
-          <span className="delete-skill">{skill}</span>
-        </li>
-      );
-    });
-
-    if (editing) {
-      input = (
-        <form className={'skill-form'} onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              name="content"
-              value={value}
-              onChange={handleChange}
-              placeholder="Press enter to add a skill"
-              required
-            ></input>
-          </label>
-        </form>
-      );
-    }
-
+  const listItems = skillList.map((skill, index) => {
     return (
-      <div className="skill-list section">
-        <h3>Technical Skills and Capalilities</h3>
-        {input}
-        <div>
-          <ul style={gridStyle}>{listItems}</ul>
-        </div>
-      </div>
+      <li onClick={() => handleRemove(index)} key={skill.toString()}>
+        <span className="delete-skill">{skill}</span>
+      </li>
     );
-}
+  });
+
+  if (editing) {
+    input = (
+      <form className={'skill-form'} onSubmit={handleSubmit}>
+        <label>
+          <input
+            type="text"
+            name="content"
+            value={value}
+            onChange={handleChange}
+            placeholder="Press enter to add a skill"
+            required
+          ></input>
+        </label>
+      </form>
+    );
+  }
+
+  return (
+    <div className="skill-list section">
+      <h3>Technical Skills and Capalilities</h3>
+      {input}
+      <div>
+        <ul style={gridStyle}>{listItems}</ul>
+      </div>
+    </div>
+  );
+};
 
 export default Skills;

@@ -12,7 +12,7 @@ const initialPersonal = {
   lastName: '',
   email: '',
   phone: '',
-}
+};
 
 const initialEducation = [
   {
@@ -21,7 +21,7 @@ const initialEducation = [
     graduationDate: '',
     id: uuid(),
   },
-]
+];
 
 const initialExperience = [
   {
@@ -31,15 +31,15 @@ const initialExperience = [
     tenureEnd: '',
     id: uuid(),
   },
-]
+];
 
 const App = (props) => {
-  const [ edit, setEdit ] = useState(true);
+  const [edit, setEdit] = useState(true);
   // const [ errors, setErrors ] = useState({});
-  const [ personalInfo, setPersonalInfo ] = useState(initialPersonal);
-  const [ skills, setSkills ] = useState([]);
-  const [ education, setEducation ] = useState(initialEducation);
-  const [ experience, setExperience ] = useState(initialExperience);
+  const [personalInfo, setPersonalInfo] = useState(initialPersonal);
+  const [skills, setSkills] = useState([]);
+  const [education, setEducation] = useState(initialEducation);
+  const [experience, setExperience] = useState(initialExperience);
 
   const addAnotherSection = (e) => {
     const { id } = e.target.dataset;
@@ -47,7 +47,8 @@ const App = (props) => {
 
     switch (id) {
       case 'education':
-        const newEducation = [...education,
+        const newEducation = [
+          ...education,
           {
             company: '',
             title: '',
@@ -55,19 +56,22 @@ const App = (props) => {
             tenureEnd: '',
             id: uuid(),
           },
-        ]
+        ];
         setEducation(newEducation);
 
         break;
       case 'experience':
-        const newExperience = [...experience, {
-          company: '',
-          title: '',
-          tenureStart: '',
-          tenureEnd: '',
-          id: uuid(),
-        }]
-        setExperience(newExperience)
+        const newExperience = [
+          ...experience,
+          {
+            company: '',
+            title: '',
+            tenureStart: '',
+            tenureEnd: '',
+            id: uuid(),
+          },
+        ];
+        setExperience(newExperience);
         break;
       default:
         return;
@@ -75,12 +79,10 @@ const App = (props) => {
   };
 
   const deleteEducation = (index) => {
-    const newEucation = education.filter(
-      (institution, currentIndex) => {
-        return currentIndex !== index;
-      }
-    );
-    setEducation(newEucation)
+    const newEucation = education.filter((institution, currentIndex) => {
+      return currentIndex !== index;
+    });
+    setEducation(newEucation);
   };
 
   const deleteExperience = (index) => {
@@ -91,7 +93,7 @@ const App = (props) => {
   };
 
   const handlePersonalInfoChange = (name, value) => {
-    const personal = {...personalInfo, [name]: value}
+    const personal = { ...personalInfo, [name]: value };
     setPersonalInfo(personal);
   };
 
@@ -101,7 +103,7 @@ const App = (props) => {
         return value;
       }
       return key;
-    })
+    });
 
     setEducation(array);
   };
@@ -114,11 +116,11 @@ const App = (props) => {
     setEdit(value);
   };
 
-    let btnClassname = 'add-button button';
+  let btnClassname = 'add-button button';
 
-    if (!edit) {
-      btnClassname += ' viewing';
-    }
+  if (!edit) {
+    btnClassname += ' viewing';
+  }
 
   return (
     <div>
@@ -172,9 +174,7 @@ const App = (props) => {
         <br />
         <div className="footer-buttons">
           <button
-            className={
-              edit ? 'button submit' : 'button submit active'
-            }
+            className={edit ? 'button submit' : 'button submit active'}
             onClick={() => isEdit(false)}
           >
             Submit
@@ -189,6 +189,6 @@ const App = (props) => {
       </div>
     </div>
   );
-}
+};
 
 export default App;

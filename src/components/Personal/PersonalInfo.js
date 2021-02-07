@@ -14,7 +14,6 @@ const PersonalInfo = (props) => {
     props.validateOnBlur(e);
   };
 
-
   if (editing) {
     field = (
       <InputField
@@ -33,7 +32,7 @@ const PersonalInfo = (props) => {
       {field}
     </div>
   );
-}
+};
 
 const PrintedField = (props) => {
   const { personalData } = props;

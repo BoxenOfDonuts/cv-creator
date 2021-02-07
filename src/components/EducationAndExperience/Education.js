@@ -58,7 +58,9 @@ const EducationForm = (props) => {
 
 const PrintedFieldItems = (props) => {
   const { education } = props;
-  const graduationDateFormatted = education.graduationDate ? education.graduationDate.replaceAll('-', '/'): '' ;
+  const graduationDateFormatted = education.graduationDate
+    ? education.graduationDate.replaceAll('-', '/')
+    : '';
 
   return (
     <div className="preview-text">
@@ -71,7 +73,7 @@ const PrintedFieldItems = (props) => {
   );
 };
 
-const Education = (props) =>  {
+const Education = (props) => {
   const { education, parentKey, editing } = props;
   let field = '';
 
@@ -100,6 +102,6 @@ const Education = (props) =>  {
       {field}
     </div>
   );
-}
+};
 
 export default Education;

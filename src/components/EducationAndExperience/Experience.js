@@ -97,7 +97,7 @@ const PrintedFieldItems = (props) => {
   );
 };
 
-const Experience = (props) =>  {
+const Experience = (props) => {
   const { experience, parentKey, editing } = props;
   let field = '';
 
@@ -127,6 +127,6 @@ const Experience = (props) =>  {
       {field}
     </div>
   );
-}
+};
 
 export default Experience;
