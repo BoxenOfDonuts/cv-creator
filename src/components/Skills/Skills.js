@@ -54,7 +54,6 @@ const Skills = (props) => {
 
 
     let input = '';
-    console.log(`skill list len: ${skillList}`)
     const gridStyle = skillFormatting(skillList.length);
 
     const listItems = skillList.map((skill, index) => {

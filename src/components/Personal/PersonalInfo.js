@@ -1,39 +1,38 @@
 import React from 'react';
 import './Personal.css';
 
-class PersonalInfo extends React.Component {
-  handleChange = (e) => {
+const PersonalInfo = (props) => {
+  const { personalData, editing } = props;
+  let field = '';
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    this.props.onInputChange(this.props.parentKey, name, value);
+    props.onInputChange(name, value);
   };
 
-  handleValidation = (e) => {
-    this.props.validateOnBlur(e);
+  const handleValidation = (e) => {
+    props.validateOnBlur(e);
   };
 
-  render() {
-    const { personalData, editing } = this.props;
-    let field = '';
 
-    if (editing) {
-      field = (
-        <InputField
-          personalData={personalData}
-          onChange={this.handleChange}
-          onblur={this.handleValidation}
-        />
-      );
-    } else {
-      field = <PrintedField personalData={personalData} />;
-    }
-
-    return (
-      <div className="personal-info section">
-        <h3>Personal Information</h3>
-        {field}
-      </div>
+  if (editing) {
+    field = (
+      <InputField
+        personalData={personalData}
+        onChange={handleChange}
+        onblur={handleValidation}
+      />
     );
+  } else {
+    field = <PrintedField personalData={personalData} />;
   }
+
+  return (
+    <div className="personal-info section">
+      <h3>Personal Information</h3>
+      {field}
+    </div>
+  );
 }
 
 const PrintedField = (props) => {
