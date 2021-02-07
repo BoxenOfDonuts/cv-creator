@@ -1,5 +1,6 @@
 # Resume Creator
 This project is my first attempt at using Create React App and Class based components.
+** Update! ** updated to use functional components and hooks!
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Thoughts... :thinking:
