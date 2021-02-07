@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { v4 as uuid } from 'uuid';
 import Header from './components/Header/Header';
@@ -7,219 +7,188 @@ import Skills from './components/Skills/Skills';
 import Education from './components/EducationAndExperience/Education';
 import Experience from './components/EducationAndExperience/Experience';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+const initialPersonal = {
+  name: '',
+  lastName: '',
+  email: '',
+  phone: '',
+}
 
-    this.state = {
-      edit: true,
-      errors: {},
-      personal: {
-        name: '',
-        lastName: '',
-        email: '',
-        phone: '',
-      },
-      skills: [],
-      education: [
-        {
-          institution: '',
-          degree: '',
-          graduationDate: '',
-          id: uuid(),
-          errors: {},
-        },
-      ],
-      experience: [
-        {
-          company: '',
-          title: '',
-          tenureStart: '',
-          tenureEnd: '',
-          id: uuid(),
-        },
-      ],
-    };
-  }
+const initialEducation = [
+  {
+    institution: '',
+    degree: '',
+    graduationDate: '',
+    id: uuid(),
+  },
+]
 
-  addAnotherSection = (e) => {
+const initialExperience = [
+  {
+    company: '',
+    title: '',
+    tenureStart: '',
+    tenureEnd: '',
+    id: uuid(),
+  },
+]
+
+const App = (props) => {
+  const [ edit, setEdit ] = useState(true);
+  // const [ errors, setErrors ] = useState({});
+  const [ personalInfo, setPersonalInfo ] = useState(initialPersonal);
+  const [ skills, setSkills ] = useState([]);
+  const [ education, setEducation ] = useState(initialEducation);
+  const [ experience, setExperience ] = useState(initialExperience);
+
+  const addAnotherSection = (e) => {
     const { id } = e.target.dataset;
     if (id === '') return;
 
     switch (id) {
       case 'education':
-        this.setState((state) => {
-          const newEducation = {
-            instiution: '',
-            degree: '',
-            graduationDate: '',
-            id: uuid(),
-          };
-          const education = [...state.education, newEducation];
-          return {
-            education,
-          };
-        });
-        break;
-      case 'experience':
-        this.setState((state) => {
-          const newExperience = {
+        const newEducation = [...education,
+          {
             company: '',
             title: '',
             tenureStart: '',
             tenureEnd: '',
             id: uuid(),
-          };
-          const experience = [...state.experience, newExperience];
-          return {
-            experience,
-          };
-        });
+          },
+        ]
+        setEducation(newEducation);
+
+        break;
+      case 'experience':
+        const newExperience = [...experience, {
+          company: '',
+          title: '',
+          tenureStart: '',
+          tenureEnd: '',
+          id: uuid(),
+        }]
+        setExperience(newExperience)
         break;
       default:
         return;
     }
   };
 
-  handleChange = (e) => {
-    console.log(e);
-  };
-
-  deleteEducation = (index) => {
-    const education = this.state.education.filter(
+  const deleteEducation = (index) => {
+    const newEucation = education.filter(
       (institution, currentIndex) => {
         return currentIndex !== index;
       }
     );
-
-    this.setState({ education });
+    setEducation(newEucation)
   };
 
-  deleteExperience = (index) => {
-    const experience = this.state.experience.filter((company, currentIndex) => {
+  const deleteExperience = (index) => {
+    const newExperience = experience.filter((company, currentIndex) => {
       return currentIndex !== index;
     });
-
-    this.setState({ experience });
+    setExperience(newExperience);
   };
 
-  handleChange = (key, name, value) => {
-    this.setState({
-      [key]: { ...this.state[key], [name]: value },
-    });
+  const handlePersonalInfoChange = (name, value) => {
+    const personal = {...personalInfo, [name]: value}
+    setPersonalInfo(personal);
   };
 
-  handleEducationChange = (key, index, value) => {
-    this.setState((state) => {
-      const array = state[key].map((key, currentIndex) => {
-        if (currentIndex === index) {
-          return value;
-        }
-        return key;
-      });
+  const handleEducationChange = (key, index, value) => {
+    const array = education.map((key, currentIndex) => {
+      if (currentIndex === index) {
+        return value;
+      }
+      return key;
+    })
 
-      return {
-        [key]: array,
-      };
-    });
+    setEducation(array);
   };
 
-  handleSkillChange = (value) => {
-    this.setState({
-      skills: value,
-    });
+  const handleSkillChange = (value) => {
+    setSkills(value);
   };
 
-  editCV = () => {
-    this.setState({
-      edit: true,
-    });
+  const isEdit = (value) => {
+    setEdit(value);
   };
 
-  submitForm = () => {
-    this.setState({
-      edit: false,
-    });
-  };
-
-  render() {
     let btnClassname = 'add-button button';
 
-    if (!this.state.edit) {
+    if (!edit) {
       btnClassname += ' viewing';
     }
 
-    return (
-      <div>
-        <Header title={'Resume Creator'} />
-        <div className="resume">
-          <PersonalInfo
-            personalData={this.state.personal}
-            onInputChange={this.handleChange}
-            parentKey={'personal'}
-            editing={this.state.edit}
-          />
-          <Skills
-            skills={this.state.skills}
-            onSkillUpdate={this.handleSkillChange}
-            onSkillSubmit={this.handleSkillSubmit}
-            editing={this.state.edit}
-          />
-          <Education
-            education={this.state.education}
-            onClick={this.deleteEducation}
-            onInputChange={this.handleEducationChange}
-            parentKey={'education'}
-            editing={this.state.edit}
-          />
-          <div>
-            <button
-              className={btnClassname}
-              data-id="education"
-              onClick={this.addAnotherSection}
-            >
-              Add
-            </button>
-          </div>
+  return (
+    <div>
+      <Header title={'Resume Creator'} />
+      <div className="resume">
+        <PersonalInfo
+          personalData={personalInfo}
+          onInputChange={handlePersonalInfoChange}
+          parentKey={'personal'}
+          editing={edit}
+        />
+        <Skills
+          skills={skills}
+          onSkillUpdate={handleSkillChange}
+          editing={edit}
+        />
+        <Education
+          education={education}
+          onClick={deleteEducation}
+          onInputChange={handleEducationChange}
+          parentKey={'education'}
+          editing={edit}
+        />
+        <div>
+          <button
+            className={btnClassname}
+            data-id="education"
+            onClick={addAnotherSection}
+          >
+            Add
+          </button>
+        </div>
 
-          <Experience
-            experience={this.state.experience}
-            onClick={this.deleteExperience}
-            onInputChange={this.handleEducationChange}
-            parentKey={'experience'}
-            editing={this.state.edit}
-          />
-          <div>
-            <button
-              className={btnClassname}
-              data-id="experience"
-              onClick={this.addAnotherSection}
-            >
-              Add
-            </button>
-          </div>
+        <Experience
+          experience={experience}
+          onClick={deleteExperience}
+          onInputChange={handleEducationChange}
+          parentKey={'experience'}
+          editing={edit}
+        />
+        <div>
+          <button
+            className={btnClassname}
+            data-id="experience"
+            onClick={addAnotherSection}
+          >
+            Add
+          </button>
+        </div>
 
-          <br />
-          <div className="footer-buttons">
-            <button
-              className={
-                this.state.edit ? 'button submit' : 'button submit active'
-              }
-              onClick={this.submitForm}
-            >
-              Submit
-            </button>
-            <button
-              className={this.state.edit ? 'button edit active' : 'button edit'}
-              onClick={this.editCV}
-            >
-              Edit
-            </button>
-          </div>
+        <br />
+        <div className="footer-buttons">
+          <button
+            className={
+              edit ? 'button submit' : 'button submit active'
+            }
+            onClick={() => isEdit(false)}
+          >
+            Submit
+          </button>
+          <button
+            className={edit ? 'button edit active' : 'button edit'}
+            onClick={() => isEdit(true)}
+          >
+            Edit
+          </button>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default App;

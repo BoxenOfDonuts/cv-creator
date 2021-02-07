@@ -1,50 +1,32 @@
-import React from 'react';
+import React, { useState }from 'react';
 import './Skills.css';
 
-class Skills extends React.Component {
-  constructor(state) {
-    super(state);
+const Skills = (props) => {
+  const [ skillList, setSkillList ] = useState(props.skills);
+  const [ value, setValue ] = useState('');
+  const { editing } = props;
 
-    this.state = {
-      list: this.props.skills,
-      value: '',
-    };
-  }
-
-  handleChange = (e) => {
-    this.setState({
-      value: e.target.value,
-    });
+  const handleChange = (e) => {
+    setValue(e.target.value)
   };
 
-  handleSubmit = (e) => {
-    console.log(this.props);
-    if (this.state.value)
-      this.setState((state) => {
-        const list = [...state.list, state.value];
-        this.props.onSkillUpdate(list);
-        e.preventDefault();
-        return {
-          list,
-          value: '',
-        };
-      });
+  const handleSubmit = (e) => {
+    if (value) {
+      const list = [...skillList, value]
+      setSkillList(list);
+      props.onSkillUpdate(list)
+      setValue('');
+      e.preventDefault();
+    }
   };
 
-  handleRemove = (index) => {
-    console.log(index);
-    this.setState((state) => {
-      const list = state.list.filter(
-        (item, currentIndex) => currentIndex !== index
-      );
-      this.props.onSkillUpdate(list);
-      return {
-        list,
-      };
-    });
+  const handleRemove = (index) => {
+    const list = skillList.filter((item, currentIndex ) => currentIndex !== index)
+    props.onSkillUpdate(list)
+    setSkillList(list)
   };
 
-  skillFormatting = (count) => {
+  const skillFormatting = (count) => {
     let columns = 0;
     let rows = 0;
 
@@ -70,15 +52,13 @@ class Skills extends React.Component {
     return gridStyle;
   };
 
-  render() {
-    const { list, value } = this.state;
-    const { editing } = this.props;
-    let input = '';
-    const gridStyle = this.skillFormatting(list.length);
 
-    const listItems = list.map((skill, index) => {
+    let input = '';
+    const gridStyle = skillFormatting(skillList.length);
+
+    const listItems = skillList.map((skill, index) => {
       return (
-        <li onClick={() => this.handleRemove(index)} key={skill.toString()}>
+        <li onClick={() => handleRemove(index)} key={skill.toString()}>
           <span className="delete-skill">{skill}</span>
         </li>
       );
@@ -86,13 +66,13 @@ class Skills extends React.Component {
 
     if (editing) {
       input = (
-        <form className={'skill-form'} onSubmit={this.handleSubmit}>
+        <form className={'skill-form'} onSubmit={handleSubmit}>
           <label>
             <input
               type="text"
               name="content"
               value={value}
-              onChange={this.handleChange}
+              onChange={handleChange}
               placeholder="Press enter to add a skill"
               required
             ></input>
@@ -110,7 +90,6 @@ class Skills extends React.Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Skills;

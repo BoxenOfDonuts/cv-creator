@@ -97,38 +97,36 @@ const PrintedFieldItems = (props) => {
   );
 };
 
-class Experience extends React.Component {
-  render() {
-    const { experience, parentKey, editing } = this.props;
-    let field = '';
+const Experience = (props) =>  {
+  const { experience, parentKey, editing } = props;
+  let field = '';
 
-    if (editing) {
-      field = experience.map((company, index) => (
-        <ExperienceForm
-          key={company.id}
-          experience={company}
-          index={index}
-          onClick={() => this.props.onClick(index)}
-          onBlur={(e) => this.props.validateOnBlur(e)}
-          handleChange={(index, value) =>
-            this.props.onInputChange(parentKey, index, value)
-          }
-          parentKey={parentKey}
-        />
-      ));
-    } else {
-      field = experience.map((company) => (
-        <PrintedFieldItems experience={company} />
-      ));
-    }
-
-    return (
-      <div className="experience section">
-        <h3>Experience</h3>
-        {field}
-      </div>
-    );
+  if (editing) {
+    field = experience.map((company, index) => (
+      <ExperienceForm
+        key={company.id}
+        experience={company}
+        index={index}
+        onClick={() => props.onClick(index)}
+        onBlur={(e) => props.validateOnBlur(e)}
+        handleChange={(index, value) =>
+          props.onInputChange(parentKey, index, value)
+        }
+        parentKey={parentKey}
+      />
+    ));
+  } else {
+    field = experience.map((company) => (
+      <PrintedFieldItems experience={company} />
+    ));
   }
+
+  return (
+    <div className="experience section">
+      <h3>Experience</h3>
+      {field}
+    </div>
+  );
 }
 
 export default Experience;

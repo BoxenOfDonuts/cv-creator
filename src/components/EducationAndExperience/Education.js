@@ -58,7 +58,7 @@ const EducationForm = (props) => {
 
 const PrintedFieldItems = (props) => {
   const { education } = props;
-  const graduationDateFormatted = education.graduationDate.replaceAll('-', '/');
+  const graduationDateFormatted = education.graduationDate ? education.graduationDate.replaceAll('-', '/'): '' ;
 
   return (
     <div className="preview-text">
@@ -71,39 +71,35 @@ const PrintedFieldItems = (props) => {
   );
 };
 
-class Education extends React.Component {
-  render() {
-    const { education, parentKey, editing } = this.props;
-    let field = '';
+const Education = (props) =>  {
+  const { education, parentKey, editing } = props;
+  let field = '';
 
-    if (editing) {
-      field = education.map((institution, index) => (
-        <EducationForm
-          education={institution}
-          index={index}
-          key={institution.id}
-          onClick={() => this.props.onClick(index)}
-          handleChange={(index, value) =>
-            this.props.onInputChange(parentKey, index, value)
-          }
-          parentKey={parentKey}
-        />
-      ));
-    } else {
-      field = education.map((institution) => (
-        <PrintedFieldItems education={institution} />
-      ));
-    }
-
-    console.log(field);
-
-    return (
-      <div className="education section">
-        <h3>Education</h3>
-        {field}
-      </div>
-    );
+  if (editing) {
+    field = education.map((institution, index) => (
+      <EducationForm
+        education={institution}
+        index={index}
+        key={institution.id}
+        onClick={() => props.onClick(index)}
+        handleChange={(index, value) =>
+          props.onInputChange(parentKey, index, value)
+        }
+        parentKey={parentKey}
+      />
+    ));
+  } else {
+    field = education.map((institution) => (
+      <PrintedFieldItems education={institution} />
+    ));
   }
+
+  return (
+    <div className="education section">
+      <h3>Education</h3>
+      {field}
+    </div>
+  );
 }
 
 export default Education;
