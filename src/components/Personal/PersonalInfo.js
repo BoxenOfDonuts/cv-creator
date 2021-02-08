@@ -5,8 +5,6 @@ const PersonalInfo = (props) => {
   const { personalData, editing } = props;
   let field = '';
 
-  console.log('rendering...')
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     props.onInputChange(name, value);
