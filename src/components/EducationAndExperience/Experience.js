@@ -129,5 +129,6 @@ const Experience = (props) => {
 
 // export default Experience;
 export default React.memo(Experience, (prevProps, nextProps) => {
-  return prevProps.experience === nextProps.experience;
+  return prevProps.experience === nextProps.experience &&
+  prevProps.editing === nextProps.editing;;
 });

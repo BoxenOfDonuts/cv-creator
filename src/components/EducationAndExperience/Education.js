@@ -103,6 +103,7 @@ const Education = (props) => {
   );
 };
 
-export default React.memo(Education, (prevProps, nexProps) => {
-  return prevProps.education === nexProps.education;
+export default React.memo(Education, (prevProps, nextProps) => {
+  return prevProps.education === nextProps.education &&
+  prevProps.editing === nextProps.editing;
 });

@@ -101,5 +101,6 @@ const InputField = (props) => {
 };
 
 export default React.memo(PersonalInfo, (prevProps, nextProps) => {
-  return prevProps.personalData === nextProps.personalData;
+  return prevProps.personalData === nextProps.personalData &&
+  prevProps.editing === nextProps.editing;
 });

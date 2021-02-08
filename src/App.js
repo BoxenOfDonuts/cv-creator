@@ -34,6 +34,15 @@ const initialExperience = [
 ];
 
 const App = () => {
+  return (
+    <div>
+      <Header title={'Resume Creator'} />
+      <Form />
+    </div>
+  );
+};
+
+const Form = (props) => {
   const [edit, setEdit] = useState(true);
   // const [ errors, setErrors ] = useState({});
   const [personalInfo, setPersonalInfo] = useState(initialPersonal);
@@ -134,8 +143,7 @@ const App = () => {
   }
 
   return (
-    <div>
-      <Header title={'Resume Creator'} />
+    <>
       <div className="resume">
         <PersonalInfo
           personalData={personalInfo}
@@ -152,7 +160,6 @@ const App = () => {
           education={education}
           onClick={deleteEducation}
           onInputChange={handleEducationChange}
-          parentKey={'education'}
           editing={edit}
         />
         <div>
@@ -169,7 +176,6 @@ const App = () => {
           experience={experience}
           onClick={deleteExperience}
           onInputChange={handleExperienceChange}
-          parentKey={'experience'}
           editing={edit}
         />
         <div>
@@ -198,8 +204,8 @@ const App = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
-};
+}
 
 export default App;
