@@ -104,4 +104,6 @@ const Education = (props) => {
   );
 };
 
-export default Education;
+export default React.memo(Education, (prevProps, nexProps) => {
+  return prevProps.education === nexProps.education;
+});

@@ -5,6 +5,8 @@ const PersonalInfo = (props) => {
   const { personalData, editing } = props;
   let field = '';
 
+  console.log('rendering...')
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     props.onInputChange(name, value);
@@ -100,4 +102,6 @@ const InputField = (props) => {
   );
 };
 
-export default PersonalInfo;
+export default React.memo(PersonalInfo, (prevProps, nextProps) => {
+  return prevProps.personalData === nextProps.personalData;
+});

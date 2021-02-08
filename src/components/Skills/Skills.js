@@ -93,4 +93,4 @@ const Skills = (props) => {
   );
 };
 
-export default Skills;
+export default React.memo(Skills);

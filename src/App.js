@@ -129,7 +129,7 @@ const App = (props) => {
         <PersonalInfo
           personalData={personalInfo}
           onInputChange={handlePersonalInfoChange}
-          parentKey={'personal'}
+          // parentKey={'personal'}
           editing={edit}
         />
         <Skills
