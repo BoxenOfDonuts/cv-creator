@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cv-creator/static/css/main.1e3be03c.chunk.css",
-    "main.js": "/cv-creator/static/js/main.7713f862.chunk.js",
-    "main.js.map": "/cv-creator/static/js/main.7713f862.chunk.js.map",
+    "main.js": "/cv-creator/static/js/main.d84edc85.chunk.js",
+    "main.js.map": "/cv-creator/static/js/main.d84edc85.chunk.js.map",
     "runtime-main.js": "/cv-creator/static/js/runtime-main.581e5ba6.js",
     "runtime-main.js.map": "/cv-creator/static/js/runtime-main.581e5ba6.js.map",
     "static/js/2.b1e03eb9.chunk.js": "/cv-creator/static/js/2.b1e03eb9.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.581e5ba6.js",
     "static/js/2.b1e03eb9.chunk.js",
     "static/css/main.1e3be03c.chunk.css",
-    "static/js/main.7713f862.chunk.js"
+    "static/js/main.d84edc85.chunk.js"
   ]
 }
