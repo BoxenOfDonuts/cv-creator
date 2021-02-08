@@ -3,7 +3,7 @@ import './Education.css';
 
 const EducationForm = (props) => {
   const { institution, degree, graduationDate } = props.education;
-  const { index, parentKey } = props;
+  const { index } = props;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +29,7 @@ const EducationForm = (props) => {
           type="text"
           name="institution"
           value={institution}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           onBlur={props.onBlur}
           required
         />
@@ -38,7 +38,7 @@ const EducationForm = (props) => {
           type="text"
           name="degree"
           value={degree}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           onBlur={props.onBlur}
           required
         />
@@ -47,7 +47,7 @@ const EducationForm = (props) => {
           type="date"
           name="graduationDate"
           value={graduationDate}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           required
         />
       </form>
@@ -74,7 +74,7 @@ const PrintedFieldItems = (props) => {
 };
 
 const Education = (props) => {
-  const { education, parentKey, editing } = props;
+  const { education, editing } = props;
   let field = '';
 
   if (editing) {
@@ -85,9 +85,8 @@ const Education = (props) => {
         key={institution.id}
         onClick={() => props.onClick(index)}
         handleChange={(index, value) =>
-          props.onInputChange(parentKey, index, value)
+          props.onInputChange(index, value)
         }
-        parentKey={parentKey}
       />
     ));
   } else {

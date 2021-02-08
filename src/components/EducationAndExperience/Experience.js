@@ -9,7 +9,7 @@ const ExperienceForm = (props) => {
     tenureEnd,
     experience,
   } = props.experience;
-  const { index, parentKey } = props;
+  const { index } = props;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,7 +17,6 @@ const ExperienceForm = (props) => {
       ...props.experience,
       [name]: value,
     };
-    console.log(form);
     props.handleChange(index, form);
   };
 
@@ -36,7 +35,7 @@ const ExperienceForm = (props) => {
           type="text"
           name="company"
           value={company}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           required
         />
         <label htmlFor="title">Job Title</label>
@@ -53,7 +52,7 @@ const ExperienceForm = (props) => {
           type="date"
           name="tenureStart"
           value={tenureStart}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           required
         />
 
@@ -62,7 +61,7 @@ const ExperienceForm = (props) => {
           type="date"
           name="tenureEnd"
           value={tenureEnd}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
           required
         />
 
@@ -72,7 +71,7 @@ const ExperienceForm = (props) => {
           cols="30"
           rows="10"
           value={experience}
-          onChange={(e) => handleChange(e, parentKey)}
+          onChange={(e) => handleChange(e)}
         ></textarea>
       </form>
       <br />
@@ -98,7 +97,7 @@ const PrintedFieldItems = (props) => {
 };
 
 const Experience = (props) => {
-  const { experience, parentKey, editing } = props;
+  const { experience, editing } = props;
   let field = '';
 
   if (editing) {
@@ -110,9 +109,8 @@ const Experience = (props) => {
         onClick={() => props.onClick(index)}
         onBlur={(e) => props.validateOnBlur(e)}
         handleChange={(index, value) =>
-          props.onInputChange(parentKey, index, value)
+          props.onInputChange(index, value)
         }
-        parentKey={parentKey}
       />
     ));
   } else {
@@ -129,6 +127,7 @@ const Experience = (props) => {
   );
 };
 
-export default React.memo(Experience, (prevProps, nexProps) => {
-  return prevProps.experience === nexProps.experience;
+// export default Experience;
+export default React.memo(Experience, (prevProps, nextProps) => {
+  return prevProps.experience === nextProps.experience;
 });

@@ -33,7 +33,7 @@ const initialExperience = [
   },
 ];
 
-const App = (props) => {
+const App = () => {
   const [edit, setEdit] = useState(true);
   // const [ errors, setErrors ] = useState({});
   const [personalInfo, setPersonalInfo] = useState(initialPersonal);
@@ -97,7 +97,7 @@ const App = (props) => {
     setPersonalInfo(personal);
   };
 
-  const handleEducationChange = (key, index, value) => {
+  const handleEducationChange = (index, value) => {
     const array = education.map((key, currentIndex) => {
       if (currentIndex === index) {
         return value;
@@ -106,6 +106,17 @@ const App = (props) => {
     });
 
     setEducation(array);
+  };
+
+  const handleExperienceChange = (index, value) => {
+    const array = experience.map((key, currentIndex) => {
+      if (currentIndex === index) {
+        return value;
+      }
+      return key;
+    });
+
+    setExperience(array);
   };
 
   const handleSkillChange = (value) => {
@@ -157,7 +168,7 @@ const App = (props) => {
         <Experience
           experience={experience}
           onClick={deleteExperience}
-          onInputChange={handleEducationChange}
+          onInputChange={handleExperienceChange}
           parentKey={'experience'}
           editing={edit}
         />
